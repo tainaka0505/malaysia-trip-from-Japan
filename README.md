@@ -1,3 +1,7 @@
 # マレーシア旅のしおり
 
-個人用の旅行アプリです。
+個人用の旅行アプリ（スマホのホーム画面に追加して使う）。
+
+- 地図データ: © OpenStreetMap contributors (ODbL)
+- 路線データ: Rapid KL GTFS（data.gov.my）
+- 地図表示: MapLibre GL JS (BSD-3-Clause)
