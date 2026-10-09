@@ -7,11 +7,13 @@
   const BASE = (document.querySelector("base") || {}).href || location.href.replace(/[^/]*$/, "");
   // 地図に入っている地域。地域を足すときは、ここと data/map/<id>/ を足す
   const REGIONS = {
-    kl: { name: "KL", full: "クアラルンプール", center: [101.703, 3.148], zoom: 14.2, bounds: [[101.60, 3.03], [101.80, 3.29]] },
-    pg: { name: "ペナン", full: "ペナン", center: [100.335, 5.415], zoom: 14.6, bounds: [[100.18, 5.30], [100.42, 5.52]] },
-    ip: { name: "イポー", full: "イポー", center: [101.081, 4.598], zoom: 14.8, bounds: [[101.00, 4.52], [101.17, 4.70]] },
+    // bounds：地図データがある範囲。これより外にはスクロール・ズームアウトできない
+    kl: { name: "KL", full: "クアラルンプール", center: [101.703, 3.148], zoom: 14.2, bounds: [[101.648, 3.064], [101.752, 3.250]], area: [[101.60, 3.03], [101.80, 3.29]] },
+    pg: { name: "ペナン", full: "ペナン", center: [100.335, 5.415], zoom: 14.6, bounds: [[100.218, 5.330], [100.378, 5.490]], area: [[100.18, 5.30], [100.42, 5.52]] },
+    ip: { name: "イポー", full: "イポー", center: [101.081, 4.598], zoom: 14.8, bounds: [[101.055, 4.553], [101.130, 4.657]], area: [[101.00, 4.52], [101.17, 4.70]] },
   };
-  const inRegion = (id, lng, lat) => { const b = REGIONS[id].bounds; return lng > b[0][0] && lng < b[1][0] && lat > b[0][1] && lat < b[1][1]; };
+  const WORLD = [[98.5, 0.5], [105.5, 7.8]]; // 全体図で動かせる範囲（マレー半島とその周り）
+  const inRegion = (id, lng, lat) => { const b = REGIONS[id].area; return lng > b[0][0] && lng < b[1][0] && lat > b[0][1] && lat < b[1][1]; };
   const regionAt = (lng, lat) => Object.keys(REGIONS).find((id) => inRegion(id, lng, lat));
   const MODE = {
     short: { t: "最短", d: "いちばん短い道", col: "#2563EB" },
@@ -47,7 +49,7 @@
   /* ---------- 地図のスタイル ---------- */
   function style(dark) {
     const c = dark
-      ? { bg: "#151B19", park: "#1D3328", water: "#173447", bld: "#252D2A", bldLine: "#2F3935", road: "#3A4440", roadCase: "#111614", major: "#5B5136", foot: "#7A8A84", label: "#C9D3CF", halo: "#151B19", cov: "#3FBF8F", indoor: "#A78BFA" }
+      ? { bg: "#1C2421", park: "#1D3328", water: "#173447", bld: "#252D2A", bldLine: "#2F3935", road: "#3A4440", roadCase: "#111614", major: "#5B5136", foot: "#7A8A84", label: "#C9D3CF", halo: "#151B19", cov: "#3FBF8F", indoor: "#A78BFA" }
       : { bg: "#F2F1EC", park: "#D6E8CF", water: "#B9D7EA", bld: "#E2DFD6", bldLine: "#D2CEC3", road: "#FFFFFF", roadCase: "#CFCBC0", major: "#FBE3A7", foot: "#8C8B85", label: "#3B3A36", halo: "#FFFFFF", cov: "#14935F", indoor: "#7C3AED" };
     const w = (a, b) => ["interpolate", ["exponential", 1.6], ["zoom"], 12, a, 18, b];
     const isK = (...k) => ["in", ["get", "k"], ["literal", k]];
@@ -58,9 +60,18 @@
     return {
       version: 8,
       glyphs: BASE + "fonts/{fontstack}/{range}.pbf",
-      sources: { kl: { type: "vector", tiles: [BASE + "tiles/{z}/{x}/{y}.pbf"], minzoom: 12, maxzoom: 16 } },
+      sources: {
+        kl: { type: "vector", tiles: [BASE + "tiles/{z}/{x}/{y}.pbf"], minzoom: 12, maxzoom: 16 },
+        ov: { type: "vector", tiles: [BASE + "tiles/ov/{z}/{x}/{y}.pbf"], minzoom: 5, maxzoom: 11 },
+      },
       layers: [
-        { id: "bg", type: "background", paint: { "background-color": c.bg } },
+        { id: "sea", type: "background", paint: { "background-color": c.water } },
+        { id: "ov-land", type: "fill", source: "ov", "source-layer": "land", paint: { "fill-color": c.bg } },
+        { id: "ov-area", type: "fill", source: "ov", "source-layer": "area", maxzoom: 12.5, paint: { "fill-color": c.cov, "fill-opacity": ["interpolate", ["linear"], ["zoom"], 5, 0.25, 12, 0.04] } },
+        { id: "ov-road", type: "line", source: "ov", "source-layer": "ovroad", maxzoom: 12, filter: ["!=", ["get", "k"], "ferry"],
+          paint: { "line-color": ["match", ["get", "k"], "major", c.major, c.roadCase], "line-width": ["interpolate", ["linear"], ["zoom"], 5, 0.6, 11, 2.6] } },
+        { id: "ov-ferry", type: "line", source: "ov", "source-layer": "ovroad", maxzoom: 12, filter: ["==", ["get", "k"], "ferry"], paint: { "line-color": "#0EA5E9", "line-width": 1, "line-dasharray": [2, 2] } },
+        { id: "ov-rail", type: "line", source: "ov", "source-layer": "ovrail", maxzoom: 12, paint: { "line-color": "#7A6A5A", "line-width": ["interpolate", ["linear"], ["zoom"], 6, 0.6, 11, 1.6], "line-dasharray": [3, 1.5] } },
         { id: "park", type: "fill", source: "kl", "source-layer": "landuse", filter: isK("park", "wood", "pitch"), paint: { "fill-color": c.park } },
         { id: "platform", type: "fill", source: "kl", "source-layer": "landuse", filter: isK("platform"), paint: { "fill-color": c.bldLine } },
         { id: "water", type: "fill", source: "kl", "source-layer": "water", filter: ["==", ["geometry-type"], "Polygon"], paint: { "fill-color": c.water } },
@@ -97,6 +108,17 @@
           paint: { "text-color": c.label, "text-halo-color": c.halo, "text-halo-width": 1.6 } },
         { id: "place-l", type: "symbol", source: "kl", "source-layer": "poi", minzoom: 15.5, filter: isK("place"),
           layout: { "text-field": ["get", "name"], "text-font": ["Noto Sans Regular"], "text-size": 11, "text-optional": true }, paint: { "text-color": "#8a5a00", "text-halo-color": c.halo, "text-halo-width": 1.4 } },
+        { id: "ov-area-line", type: "line", source: "ov", "source-layer": "area", maxzoom: 12.5, paint: { "line-color": c.cov, "line-width": 1.5, "line-dasharray": [2, 1.5] } },
+        { id: "ov-area-label", type: "symbol", source: "ov", "source-layer": "place", minzoom: 8.5, maxzoom: 12, filter: ["==", ["get", "k"], "area"],
+          layout: { "text-field": ["get", "ja"], "text-font": ["Noto Sans Medium"], "text-size": 12, "text-anchor": "bottom", "text-offset": [0, -0.3] }, paint: { "text-color": c.cov, "text-halo-color": c.halo, "text-halo-width": 1.6 } },
+        { id: "ov-place", type: "symbol", source: "ov", "source-layer": "place", maxzoom: 12,
+          filter: ["all", ["!=", ["get", "k"], "area"], ["any", ["<=", ["get", "r"], ["interpolate", ["linear"], ["zoom"], 5, 3, 8, 7, 10, 10]], ["all", ["==", ["get", "k"], "spot"], [">=", ["zoom"], 8]]]],
+          layout: { "text-field": ["case", ["!=", ["get", "ja"], ""], ["concat", ["get", "ja"], "\n", ["get", "name"]], ["get", "name"]], "text-font": ["Noto Sans Medium"],
+            "text-size": ["interpolate", ["linear"], ["zoom"], 5, 10, 10, 13], "text-anchor": "top", "text-offset": [0, 0.5], "text-optional": true },
+          paint: { "text-color": c.label, "text-halo-color": c.halo, "text-halo-width": 1.6 } },
+        { id: "ov-place-dot", type: "circle", source: "ov", "source-layer": "place", maxzoom: 12,
+          filter: ["all", ["!=", ["get", "k"], "area"], ["any", ["<=", ["get", "r"], ["interpolate", ["linear"], ["zoom"], 5, 3, 8, 7, 10, 10]], ["all", ["==", ["get", "k"], "spot"], [">=", ["zoom"], 8]]]],
+          paint: { "circle-radius": 3, "circle-color": ["match", ["get", "k"], "spot", "#D9940F", c.label], "circle-stroke-color": c.halo, "circle-stroke-width": 1 } },
       ],
     };
   }
@@ -191,8 +213,8 @@
       el.append(wrap);
 
       const map = new maplibregl.Map({
-        container: mapEl, style: style(dark), center: REGIONS[region].center, zoom: REGIONS[region].zoom, minZoom: 11, maxZoom: 19.5,
-        maxBounds: REGIONS[region].bounds, attributionControl: false, localIdeographFontFamily: "'Hiragino Sans','Noto Sans JP',sans-serif", dragRotate: true, pitchWithRotate: false,
+        container: mapEl, style: style(dark), center: REGIONS[region].center, zoom: REGIONS[region].zoom, minZoom: 5, maxZoom: 19.5, renderWorldCopies: false,
+        maxBounds: WORLD, attributionControl: false, localIdeographFontFamily: "'Hiragino Sans','Noto Sans JP',sans-serif", dragRotate: true, pitchWithRotate: false,
       });
       map.addControl(new maplibregl.AttributionControl({ compact: true, customAttribution: "© OpenStreetMap contributors / GTFS: data.gov.my" }), "bottom-left");
       map.touchZoomRotate.enableRotation();
@@ -228,9 +250,7 @@
         region = id;
         try { localStorage.setItem("mt:map-region", id); } catch (e) {}
         drawRegionBar();
-        map.setMaxBounds(null);
-        if (move) map.jumpTo({ center: REGIONS[id].center, zoom: REGIONS[id].zoom });
-        map.setMaxBounds(REGIONS[id].bounds);
+        if (move) map.flyTo({ center: REGIONS[id].center, zoom: REGIONS[id].zoom, duration: 900 });
         if (changed) {
           to = null; from = null; routes = []; toMarker.remove(); fromMarker.remove();
           if (map.getSource("route")) map.getSource("route").setData({ type: "FeatureCollection", features: [] });
@@ -239,6 +259,15 @@
         }
       }
       drawRegionBar();
+      // 拡大して別の地域を見たら、その地域に切り替える（目的地を選んでいない時だけ）
+      map.on("moveend", () => {
+        if (map.getZoom() < 11 || to) return;
+        const c = map.getCenter();
+        const id = regionAt(c.lng, c.lat);
+        if (id && id !== region) switchRegion(id, false);
+      });
+      // 全体図の「詳細地図」の枠をタップしたら、その地域へ
+      map.on("click", "ov-area", (e) => { const id = e.features[0] && e.features[0].properties.id; if (id && map.getZoom() < 11) switchRegion(id, true); });
 
       map.on("load", () => {
         map.addSource("route", { type: "geojson", data: { type: "FeatureCollection", features: [] } });
