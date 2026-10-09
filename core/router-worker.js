@@ -4,12 +4,15 @@
    - いくつかの「好み」で別々に計算し、違う道だけを候補として返す
    ===================================================================== */
 let G = null, T = null;
+const CACHE = {}; // 地域ごとに読み込んだデータ
 const WALK = 1.25; // m/s（約4.5km/h）
 
 function acc(arr) { const o = new Int32Array(arr.length); let s = 0; for (let i = 0; i < arr.length; i++) { s += arr[i]; o[i] = s; } return o; }
 
-async function load(base) {
-  const [g, t] = await Promise.all([fetch(base + "data/map/graph.json").then((r) => r.json()), fetch(base + "data/map/transit.json").then((r) => r.json())]);
+async function load(base, region) {
+  if (CACHE[region]) { G = CACHE[region].G; T = CACHE[region].T; return; }
+  const dir = base + "data/map/" + region + "/";
+  const [g, t] = await Promise.all([fetch(dir + "graph.json").then((r) => r.json()), fetch(dir + "transit.json").then((r) => r.json())]);
   const N = g.lat.length, E = g.a.length;
   const lat = acc(g.lat), lon = acc(g.lon);
   // 隣接リスト（CSR）
@@ -47,6 +50,7 @@ async function load(base) {
   const nodeStops = new Map();
   t.stops.forEach((s, i) => (s.acc || []).forEach(([n, c]) => { let a = nodeStops.get(n); if (!a) nodeStops.set(n, (a = [])); a.push([i, c]); }));
   T = { t, S, stopPats, transfers, nodeStops };
+  CACHE[region] = { G, T };
 }
 
 function dist(la1, lo1, la2, lo2) {
@@ -99,6 +103,7 @@ function edgeCost(e, prof, ctx) {
   if (f & F.indoor && ctx.night) m *= 3; // 夜はモールの中が閉まっていることが多い
   if (f & F.steps) m *= prof.steps;
   if (f & F.major) m *= prof.major;
+  if (G.g.cls[e] === 11) m *= prof.cross > 1 ? 2 : 1.35; // 幹線道路（trunk）沿い
   if (f & F.noside) m *= 1.6 * (prof.cross > 1 ? 1.6 : 1);
   if (f & F.path) m *= 1.25;
   let c = s * m;
@@ -293,7 +298,8 @@ function overlap(a, b) {
 self.onmessage = async (ev) => {
   const m = ev.data;
   try {
-    if (m.type === "load") { await load(m.base); self.postMessage({ id: m.id, ok: true, nodes: G.N, stops: T.S }); return; }
+    if (m.region) await load(m.base, m.region);
+    if (m.type === "load") { self.postMessage({ id: m.id, ok: true, nodes: G.N, stops: T.S }); return; }
     if (m.type === "snap") { const [n, d] = nearest(m.la, m.lo, m.max || 400); self.postMessage({ id: m.id, ok: true, node: n, d, la: n >= 0 ? G.lat[n] / 1e6 : null, lo: n >= 0 ? G.lon[n] / 1e6 : null }); return; }
     if (m.type === "route") {
       const [s, ds] = nearest(m.from[0], m.from[1], 600), [d, dd] = nearest(m.to[0], m.to[1], 600);

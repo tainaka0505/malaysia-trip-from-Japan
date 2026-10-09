@@ -5,8 +5,14 @@
    ===================================================================== */
 (function () {
   const BASE = (document.querySelector("base") || {}).href || location.href.replace(/[^/]*$/, "");
-  const AREA = [[101.655, 3.07], [101.745, 3.185]];
-  const CENTER = [101.703, 3.148];
+  // 地図に入っている地域。地域を足すときは、ここと data/map/<id>/ を足す
+  const REGIONS = {
+    kl: { name: "KL", full: "クアラルンプール", center: [101.703, 3.148], zoom: 14.2, bounds: [[101.60, 3.03], [101.80, 3.29]] },
+    pg: { name: "ペナン", full: "ペナン", center: [100.335, 5.415], zoom: 14.6, bounds: [[100.18, 5.30], [100.42, 5.52]] },
+    ip: { name: "イポー", full: "イポー", center: [101.081, 4.598], zoom: 14.8, bounds: [[101.00, 4.52], [101.17, 4.70]] },
+  };
+  const inRegion = (id, lng, lat) => { const b = REGIONS[id].bounds; return lng > b[0][0] && lng < b[1][0] && lat > b[0][1] && lat < b[1][1]; };
+  const regionAt = (lng, lat) => Object.keys(REGIONS).find((id) => inRegion(id, lng, lat));
   const MODE = {
     short: { t: "最短", d: "いちばん短い道", col: "#2563EB" },
     cover: { t: "屋根・屋内優先", d: "暑さ・スコール対策", col: "#0E7A4D" },
@@ -25,8 +31,8 @@
     }
     return new Promise((res) => { const id = ++wid; waits[id] = res; worker.postMessage(Object.assign({ id }, msg)); });
   }
-  let loaded = null;
-  const loadEngine = () => (loaded = loaded || rpc({ type: "load", base: BASE }));
+  const loaded = {};
+  const loadEngine = (region) => (loaded[region] = loaded[region] || rpc({ type: "load", base: BASE, region }));
 
   /* ---------- マレーシア時間 ---------- */
   function myNow() {
@@ -52,7 +58,7 @@
     return {
       version: 8,
       glyphs: BASE + "fonts/{fontstack}/{range}.pbf",
-      sources: { kl: { type: "vector", tiles: [BASE + "tiles/{z}/{x}/{y}.pbf"], minzoom: 12, maxzoom: 16, bounds: [101.655, 3.07, 101.745, 3.247] } },
+      sources: { kl: { type: "vector", tiles: [BASE + "tiles/{z}/{x}/{y}.pbf"], minzoom: 12, maxzoom: 16 } },
       layers: [
         { id: "bg", type: "background", paint: { "background-color": c.bg } },
         { id: "park", type: "fill", source: "kl", "source-layer": "landuse", filter: isK("park", "wood", "pitch"), paint: { "fill-color": c.park } },
@@ -176,14 +182,19 @@
       const gpsBtn = h("button", { class: "map-fab gps", "aria-label": "現在地" }, icon("gps"));
       const layerBtn = h("button", { class: "map-fab legend-btn", "aria-label": "地図の見方" }, icon("info"));
       const panel = h("div", { class: "map-panel" });
-      wrap.append(mapEl, h("div", { class: "map-top" }, h("div", { class: "searchbox" }, icon("search"), searchInput)), h("div", { class: "map-fabs" }, layerBtn, gpsBtn), panel);
+      let region = "kl";
+      try { region = localStorage.getItem("mt:map-region") || "kl"; } catch (e) {}
+      if (!REGIONS[region]) region = "kl";
+      if (param && param.region && REGIONS[param.region]) region = param.region;
+      const regionBar = h("div", { class: "region-bar", role: "tablist" });
+      wrap.append(mapEl, h("div", { class: "map-top" }, h("div", { class: "searchbox" }, icon("search"), searchInput), regionBar), h("div", { class: "map-fabs" }, layerBtn, gpsBtn), panel);
       el.append(wrap);
 
       const map = new maplibregl.Map({
-        container: mapEl, style: style(dark), center: CENTER, zoom: 14.2, minZoom: 12, maxZoom: 19.5,
-        maxBounds: [[101.60, 3.03], [101.80, 3.29]], attributionControl: false, localIdeographFontFamily: "'Hiragino Sans','Noto Sans JP',sans-serif", dragRotate: true, pitchWithRotate: false,
+        container: mapEl, style: style(dark), center: REGIONS[region].center, zoom: REGIONS[region].zoom, minZoom: 11, maxZoom: 19.5,
+        maxBounds: REGIONS[region].bounds, attributionControl: false, localIdeographFontFamily: "'Hiragino Sans','Noto Sans JP',sans-serif", dragRotate: true, pitchWithRotate: false,
       });
-      map.addControl(new maplibregl.AttributionControl({ compact: true, customAttribution: "© OpenStreetMap contributors / Rapid KL GTFS" }), "bottom-left");
+      map.addControl(new maplibregl.AttributionControl({ compact: true, customAttribution: "© OpenStreetMap contributors / GTFS: data.gov.my" }), "bottom-left");
       map.touchZoomRotate.enableRotation();
       // 画面の大きさが変わったら地図も合わせる
       const ro = new ResizeObserver(() => map.resize());
@@ -206,6 +217,28 @@
       const meMarker = new maplibregl.Marker({ element: meEl });
       const toMarker = new maplibregl.Marker({ element: h("div", { class: "pin to" }, icon("pin")), anchor: "bottom" });
       const fromMarker = new maplibregl.Marker({ element: h("div", { class: "pin from" }), anchor: "center" });
+
+      function drawRegionBar() {
+        regionBar.replaceChildren(...Object.entries(REGIONS).map(([id, r]) =>
+          h("button", { class: "chip" + (id === region ? " on" : ""), role: "tab", "aria-selected": id === region ? "true" : "false", onclick: () => switchRegion(id, true) }, r.name)));
+      }
+      function switchRegion(id, move) {
+        if (!REGIONS[id]) return;
+        const changed = id !== region;
+        region = id;
+        try { localStorage.setItem("mt:map-region", id); } catch (e) {}
+        drawRegionBar();
+        map.setMaxBounds(null);
+        if (move) map.jumpTo({ center: REGIONS[id].center, zoom: REGIONS[id].zoom });
+        map.setMaxBounds(REGIONS[id].bounds);
+        if (changed) {
+          to = null; from = null; routes = []; toMarker.remove(); fromMarker.remove();
+          if (map.getSource("route")) map.getSource("route").setData({ type: "FeatureCollection", features: [] });
+          panel.className = "map-panel"; panel.replaceChildren(); searchInput.value = "";
+          loadEngine(id);
+        }
+      }
+      drawRegionBar();
 
       map.on("load", () => {
         map.addSource("route", { type: "geojson", data: { type: "FeatureCollection", features: [] } });
@@ -243,7 +276,7 @@
       }
       function startGps() {
         if (!navigator.geolocation) { toast("この端末では現在地を使えません"); return; }
-        if (watchId != null) { follow = true; gpsBtn.classList.add("follow"); if (me) map.easeTo({ center: [me[0], me[1]], zoom: Math.max(map.getZoom(), 16.5) }); return; }
+        if (watchId != null) { if (me && regionAt(me[0], me[1]) && regionAt(me[0], me[1]) !== region) switchRegion(regionAt(me[0], me[1]), false); follow = true; gpsBtn.classList.add("follow"); if (me) map.easeTo({ center: [me[0], me[1]], zoom: Math.max(map.getZoom(), 16.5) }); return; }
         gpsBtn.classList.add("busy");
         watchId = navigator.geolocation.watchPosition((p) => {
           gpsBtn.classList.remove("busy");
@@ -251,11 +284,14 @@
           me = [p.coords.longitude, p.coords.latitude, p.coords.accuracy];
           meMarker.setLngLat([me[0], me[1]]).addTo(map);
           if (map.getSource("acc")) map.getSource("acc").setData(circle(me[0], me[1], Math.min(me[2], 300)));
-          const inArea = me[1] > 3.03 && me[1] < 3.29 && me[0] > 101.6 && me[0] < 101.8;
+          const here = regionAt(me[0], me[1]);
+          const inArea = here === region;
+          if (first && here && here !== region && !to) { switchRegion(here, false); }
           if (first) {
-            if (!inArea) toast("現在地は地図の範囲（KL中心部・バトゥ洞窟周辺）の外です");
-            else { follow = true; gpsBtn.classList.add("follow"); map.easeTo({ center: [me[0], me[1]], zoom: 16.5 }); }
-          } else if (follow && inArea) map.easeTo({ center: [me[0], me[1]], duration: 600 });
+            if (!here) toast("現在地は地図の範囲（KL・ペナン・イポー）の外です");
+            else if (here !== region) toast("現在地は" + REGIONS[here].full + "です。上のボタンで切り替えられます");
+            if (regionAt(me[0], me[1]) === region) { follow = true; gpsBtn.classList.add("follow"); map.easeTo({ center: [me[0], me[1]], zoom: 16.5 }); }
+          } else if (follow && regionAt(me[0], me[1]) === region) map.easeTo({ center: [me[0], me[1]], duration: 600 });
           if (navMode) navTick();
         }, (err) => {
           gpsBtn.classList.remove("busy");
@@ -273,18 +309,18 @@
         h("p", null, h("span", { class: "lg dot", style: { borderColor: "#D9480F" } }), "駅の出入口（ズームすると番号）"),
         h("p", null, h("span", { class: "lg dot", style: { background: "#2563EB" } }), "トイレ　", h("span", { class: "lg dot", style: { background: "#7C3AED" } }), "エレベーター"),
         h("p", { class: "small muted" }, "長押し（PCは右クリック）で、その地点を出発地・目的地・保存地点にできます。"),
-        h("p", { class: "small muted" }, "地図データ：© OpenStreetMap contributors（2026年10月取得）。路線データ：Rapid KL（data.gov.my）。KTMコミューターとGoKLの時刻は目安です。"),
+        h("p", { class: "small muted" }, "地図データ：© OpenStreetMap contributors（2026年10月取得）。路線データ：Rapid KL・Rapid Penang・BAS.MY Ipoh（data.gov.my）。KTMコミューター、GoKL、ペナンのフェリーとケーブル鉄道の時刻は目安です。"),
         h("div", { class: "row gap" }, h("button", { class: "btn", onclick: offlineSave }, icon("download"), "オフライン用に地図を全部保存"))
       ));
 
       /* ----- 検索 ----- */
-      let places = null;
-      const loadPlaces = () => (places = places || fetch(BASE + "data/map/places.json").then((r) => r.json()));
+      const placesCache = {};
+      const loadPlaces = () => (placesCache[region] = placesCache[region] || fetch(BASE + "data/map/" + region + "/places.json").then((r) => r.json()));
       const fold = (s) => (s || "").toLowerCase().normalize("NFKC").replace(/[\s'’\-・（）()]/g, "");
       function search(q) {
         const f = fold(q);
         return loadPlaces().then((ps) => {
-          const all = pins.map((p) => ({ n: p.name, ja: p.name, c: "保存した地点", la: p.la, lo: p.lo, star: 2 })).concat(ps);
+          const all = pins.filter((p) => regionAt(p.lo, p.la) === region).map((p) => ({ n: p.name, ja: p.name, c: "保存した地点", la: p.la, lo: p.lo, star: 2 })).concat(ps);
           const hit = [];
           for (const p of all) {
             const keys = [p.ja, p.n].concat(p.a || []).map(fold);
@@ -327,8 +363,8 @@
           panel.className = "map-panel open";
           const stars = ps.filter((p) => p.star);
           panel.replaceChildren(
-            h("div", { class: "panel-head" }, h("strong", null, "よく行く場所"), closeBtn()),
-            pins.length ? [h("h3", { class: "sec small" }, "保存した地点"), h("ul", { class: "res-list" }, pins.map((p) => placeRow({ n: p.name, ja: p.name, c: p.note || "保存した地点", la: p.la, lo: p.lo }, (pp) => setTo({ la: pp.la, lo: pp.lo, name: pp.ja }))))] : null,
+            h("div", { class: "panel-head" }, h("strong", null, REGIONS[region].full + "のよく行く場所"), closeBtn()),
+            pins.some((p) => regionAt(p.lo, p.la) === region) ? [h("h3", { class: "sec small" }, "保存した地点"), h("ul", { class: "res-list" }, pins.filter((p) => regionAt(p.lo, p.la) === region).map((p) => placeRow({ n: p.name, ja: p.name, c: p.note || "保存した地点", la: p.la, lo: p.lo }, (pp) => setTo({ la: pp.la, lo: pp.lo, name: pp.ja }))))] : null,
             h("h3", { class: "sec small" }, "主な観光地・駅"),
             h("ul", { class: "res-list" }, stars.map((p) => placeRow(p, (pp) => setTo({ la: pp.la, lo: pp.lo, name: pp.ja || pp.n, c: pp.c })))));
         });
@@ -385,10 +421,10 @@
         const o = origin();
         if (!o || !to) return;
         const list = panel.querySelector(".route-list");
-        const st = await loadEngine();
+        const st = await loadEngine(region);
         if (!st.ok) { list.replaceChildren(h("p", { class: "empty" }, "ルートのデータを読み込めませんでした")); return; }
         const t = depart || myNow();
-        const res = await rpc({ type: "route", from: [o.la, o.lo], to: [to.la, to.lo], t0: t.t0, dow: t.dow, transit: true });
+        const res = await rpc({ type: "route", region, base: BASE, from: [o.la, o.lo], to: [to.la, to.lo], t0: t.t0, dow: t.dow, transit: true });
         if (!res.ok) { list.replaceChildren(h("p", { class: "empty" }, res.err || "ルートが見つかりませんでした")); return; }
         routes = res.routes;
         routes.forEach((r) => (r.t0 = t.t0));
@@ -555,7 +591,7 @@
         let close;
         const bar = h("i", { style: { width: "0%" } });
         const label = h("p", { class: "small" }, "準備中…");
-        close = sheet("オフライン用に保存", h("div", { class: "form" }, label, h("div", { class: "bar" }, bar), h("p", { class: "small muted" }, "Wi-Fiにつながっている時に行ってください（約17MB）。途中で閉じても、保存できた分は残ります。")));
+        close = sheet("オフライン用に保存", h("div", { class: "form" }, label, h("div", { class: "bar" }, bar), h("p", { class: "small muted" }, "Wi-Fiにつながっている時に行ってください（KL・ペナン・イポーで約30MB）。途中で閉じても、保存できた分は残ります。")));
         try {
           const list = await fetch(BASE + "assets.json", { cache: "no-store" }).then((r) => r.json());
           const cache = await caches.open("mt-data-v1");
@@ -574,7 +610,7 @@
       }
 
       if (!param || !param.to) setTimeout(() => { if (!to) startGps(); }, 600);
-      loadEngine();
+      loadEngine(region);
     },
   });
 })();
