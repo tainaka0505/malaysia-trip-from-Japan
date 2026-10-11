@@ -12,7 +12,7 @@
 <link rel="icon" href="icons/icon-192.png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <title>マレーシア旅のしおり</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Zen+Maru+Gothic:wght@700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Zen+Maru+Gothic:wght@700&family=Shippori+Mincho+B1:wght@800&display=swap">
 <link rel="stylesheet" href="vendor/maplibre-gl.css">
 <style>
 /* レイアウト：スマホは上に見出し・下にタブバー、PCは左にメニュー・中央に1カラム */
@@ -337,6 +337,74 @@ body.full-view main{padding:0;max-width:none;height:calc(100dvh - 54px - var(--t
 .lg.dash{height:0;border-top:3px dashed;background:none}
 .lg.dot{width:12px;height:12px;border-radius:50%;border:2px solid}
 .maplibregl-ctrl-attrib{font-size:10px}
+
+/* ---------- スポット（雑誌ふう） ---------- */
+:root{--f-mag:"Shippori Mincho B1","Hiragino Mincho ProN","Yu Mincho","Noto Serif JP",serif}
+body.wide-view main{max-width:1180px}
+.mz-ph{position:relative;overflow:hidden;background:var(--surface2)}
+.mz-ph img{display:block;width:100%;height:100%;object-fit:cover}
+.mz-ph.noimg{display:flex;flex-direction:column;justify-content:flex-end;gap:2px;padding:12px;background:linear-gradient(135deg,var(--accent) 0%,#0b4a3c 60%,#D9940F 140%);color:#fff}
+.mz-ph.noimg span{font-family:var(--f-mono);font-size:.62rem;letter-spacing:.18em;opacity:.8}
+.mz-ph.noimg b{font-family:var(--f-mag);font-size:1.05rem;line-height:1.25}
+.mz-cover{position:relative;margin:-14px -16px 14px;height:min(62vh,460px);color:#fff;overflow:hidden}
+@media (min-width:900px){.mz-cover{margin:0 0 18px;border-radius:20px}}
+.mz-cover .mz-ph{position:absolute;inset:0}
+.mz-cover::after,.mz-opener::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgb(0 0 0 / .05) 30%,rgb(0 0 0 / .7));pointer-events:none}
+.mz-cover-t{position:absolute;left:20px;right:20px;bottom:22px;z-index:1}
+.mz-cover h2{font-family:var(--f-mag);font-size:clamp(2rem,7.5vw,3.4rem);font-weight:800;line-height:1.12;letter-spacing:.02em;margin:6px 0 8px;text-shadow:0 2px 14px rgb(0 0 0 / .35)}
+.mz-cover p{margin:0;font-size:.85rem;opacity:.92}
+.mz-no{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.2em;opacity:.9}
+.mz-filters{position:sticky;top:46px;z-index:8;background:var(--bg);margin:8px -16px 0;padding:8px 16px 6px;display:flex;flex-direction:column;gap:4px}
+@media (min-width:900px){.mz-filters{top:46px;margin:8px 0 0;padding:8px 0 6px}}
+.mz-filters .chip{min-height:34px;padding:5px 13px}
+.mz-sec{margin-top:26px}
+.mz-opener{position:relative;height:210px;border-radius:18px;overflow:hidden;color:#fff;margin-bottom:14px}
+.mz-opener .mz-ph{position:absolute;inset:0}
+.mz-opener.plain{background:var(--accent);height:auto;padding-top:60px}
+.mz-opener-t{position:relative;z-index:1;display:flex;flex-direction:column;justify-content:flex-end;height:100%;padding:16px 18px}
+.mz-opener h2{font-family:var(--f-mag);font-size:1.9rem;font-weight:800;margin:2px 0 2px}
+.mz-opener p{margin:0;font-size:.9rem}
+.mz-count{position:absolute;top:14px;right:16px;font-size:.72rem;padding:3px 10px;border-radius:99px;background:rgb(0 0 0 / .45)}
+@media (min-width:900px){.mz-opener{height:280px}.mz-opener h2{font-size:2.4rem}}
+.mz-feats{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))}
+.mz-feature{background:var(--surface);border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:var(--shadow);cursor:pointer;display:flex;flex-direction:column}
+.mz-feature:hover .mz-ph img{transform:scale(1.03)}
+.mz-ph img{transition:transform .4s ease}
+.mz-hero{position:relative;aspect-ratio:4/3;color:#fff}
+.mz-hero .mz-ph{position:absolute;inset:0}
+.mz-hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 35%,rgb(0 0 0 / .78));pointer-events:none}
+.mz-over{position:absolute;left:0;right:0;bottom:0;z-index:1;padding:12px 14px}
+.mz-over h3{font-family:var(--f-mag);font-size:1.3rem;font-weight:800;line-height:1.3;margin:6px 0 2px}
+.mz-over p{margin:0;font-size:.85rem;opacity:.95}
+.mz-jp-mini{margin:0;padding:10px 14px 12px;font-size:.82rem;line-height:1.6;color:var(--ink)}
+.mz-jp-mini b{display:inline-block;font-size:.68rem;letter-spacing:.06em;padding:1px 7px;margin-right:6px;border-radius:4px;background:var(--hi);color:#fff;vertical-align:1px}
+.mz-cats{display:flex;flex-wrap:wrap;gap:4px}
+.mz-cat{font-size:.66rem;font-weight:700;letter-spacing:.04em;padding:1px 7px;border-radius:4px;background:var(--surface2);color:var(--muted);white-space:nowrap}
+.mz-over .mz-cat,.mz-fig .mz-cat{background:rgb(255 255 255 / .9);color:#123}
+.mz-cat.c-rare{background:var(--hi);color:#fff}
+.mz-cat.c-exp{background:var(--accent);color:var(--accent-ink)}
+.mz-cat.c-night{background:#26305e;color:#fff}
+.mz-items{display:grid;gap:10px;grid-template-columns:1fr;margin-top:14px}
+@media (min-width:700px){.mz-items{grid-template-columns:1fr 1fr}}
+@media (min-width:1050px){.mz-items{grid-template-columns:repeat(3,1fr)}}
+.mz-item{display:flex;gap:12px;align-items:stretch;text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:14px;padding:8px;color:var(--ink);box-shadow:var(--shadow);min-width:0}
+.mz-item .mz-ph{flex:none;width:96px;height:96px;border-radius:10px}
+.mz-item .mz-ph.noimg{padding:8px}.mz-item .mz-ph.noimg b{font-size:.75rem}
+.mz-item-t{display:flex;flex-direction:column;gap:3px;min-width:0;padding:2px 2px 0 0}
+.mz-item-t strong{font-family:var(--f-mag);font-size:1rem;line-height:1.35}
+.clamp2{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.mz-credit{margin-top:28px;text-align:center}
+.mz-detail .mz-fig{margin:0 -18px 12px}
+.mz-fig .mz-ph{aspect-ratio:3/2;width:100%}
+.mz-fig figcaption{font-size:.68rem;color:var(--muted);padding:4px 18px 0;line-height:1.4}
+.mz-kicker{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.12em;color:var(--muted)}
+.mz-lead{font-family:var(--f-mag);font-size:1.35rem;font-weight:800;line-height:1.4;margin:6px 0 8px}
+.mz-jp{margin:14px 0;padding:12px 14px;border-left:4px solid var(--hi);background:var(--hi-soft);border-radius:0 12px 12px 0}
+.mz-jp strong{font-size:.78rem;letter-spacing:.06em;color:var(--hi)}
+.mz-jp p{margin:4px 0 0;font-size:.92rem}
+.mz-body{font-size:.95rem;line-height:1.85}
+.mz-actions{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 6px}
+.mz-actions .btn{flex:1 1 180px}
 </style>
 </head>
 <body>
@@ -376,11 +444,11 @@ body.full-view main{padding:0;max-width:none;height:calc(100dvh - 54px - var(--t
 /* 読み込むファイルの一覧。機能を足すときは、ここに data/ と modules/ のファイルを足す。 */
 const FILES = [
   "core/app.js", "core/icons.js", "core/store.js",
-  "data/trip.js", "data/spots.js", "data/ets.js", "data/transport.js", "data/guide.js",
+  "data/trip.js", "data/spots.js", "data/spot_photos.js", "data/ets.js", "data/transport.js", "data/guide.js",
   "modules/itinerary.js", "modules/map.js", "modules/spots.js", "modules/transit.js", "modules/split.js",
   "modules/packing.js", "modules/guide.js",
 ];
-const V = "202610100847";
+const V = "202610112251";
 async function boot(pass) {
   for (const f of FILES) {
     await new Promise((ok) => {

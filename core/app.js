@@ -137,6 +137,7 @@
     const view = document.getElementById("view");
     view.replaceChildren();
     document.body.classList.toggle("full-view", !!mod.full);
+    document.body.classList.toggle("wide-view", !!mod.wide);
     view.scrollTop = 0;
     window.scrollTo(0, 0);
     document.getElementById("view-title").textContent = mod.title;
