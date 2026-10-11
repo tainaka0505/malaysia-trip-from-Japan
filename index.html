@@ -408,6 +408,28 @@ body.wide-view main{max-width:1180px}
 
 .tabbar{grid-template-columns:repeat(6,1fr)}
 .tab span{font-size:.64rem;white-space:nowrap}
+
+/* ---------- ホテル ---------- */
+.ht-sec{margin-top:22px}
+.ht-h{font-family:var(--f-mag);font-size:1.6rem;font-weight:800;display:flex;align-items:baseline;gap:10px;border-bottom:2px solid var(--ink);padding-bottom:4px}
+.ht-h small{font-family:var(--f-body);font-size:.75rem;font-weight:500;color:var(--muted)}
+.ht-note{margin:6px 0 4px}
+.ht-tierh{font-size:.8rem;letter-spacing:.08em;margin:16px 0 8px;display:flex;align-items:center;gap:8px}
+.ht-tierh::before{content:"";width:10px;height:10px;border-radius:3px;background:var(--muted)}
+.ht-tierh.t-hi::before{background:var(--hi)} .ht-tierh.t-mid::before{background:var(--accent)} .ht-tierh.t-low::before{background:#5B7FA6}
+.ht-grid{display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr))}
+.ht-card{background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--muted);border-radius:14px;padding:12px 14px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:2px;min-width:0}
+.ht-card.t-hi{border-top-color:var(--hi)} .ht-card.t-mid{border-top-color:var(--accent)} .ht-card.t-low{border-top-color:#5B7FA6}
+.ht-card.picked{outline:2px solid var(--hi);outline-offset:-1px}
+.ht-top{display:flex;align-items:center;gap:8px;min-width:0}
+.ht-zone{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ht-tier{flex:none;font-size:.66rem;font-weight:700;padding:1px 7px;border-radius:4px;background:var(--surface2);color:var(--muted)}
+.t-hi .ht-tier{background:var(--hi);color:#fff} .t-mid .ht-tier{background:var(--accent);color:var(--accent-ink)} .t-low .ht-tier{background:#5B7FA6;color:#fff}
+.ht-card h3{font-family:var(--f-mag);font-size:1.1rem;font-weight:800;margin-top:6px}
+.ht-price{font-size:.95rem;font-weight:500;margin:6px 0 2px}
+.ht-pts{margin:4px 0 0;padding-left:1.1em;font-size:.85rem;color:var(--ink)}
+.ht-act{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.ht-act .chip{min-height:34px;padding:4px 11px;font-size:.8rem}
 </style>
 </head>
 <body>
@@ -447,11 +469,11 @@ body.wide-view main{max-width:1180px}
 /* 読み込むファイルの一覧。機能を足すときは、ここに data/ と modules/ のファイルを足す。 */
 const FILES = [
   "core/app.js", "core/icons.js", "core/store.js",
-  "data/trip.js", "data/spots.js", "data/spot_photos.js", "data/ets.js", "data/transport.js", "data/guide.js",
+  "data/trip.js", "data/spots.js", "data/spot_photos.js", "data/ets.js", "data/transport.js", "data/guide.js", "data/hotels.js",
   "modules/itinerary.js", "modules/map.js", "modules/spots.js", "modules/transit.js", "modules/split.js",
-  "modules/packing.js", "modules/guide.js",
+  "modules/packing.js", "modules/guide.js", "modules/hotels.js",
 ];
-const V = "202610112312";
+const V = "202610112320";
 async function boot(pass) {
   for (const f of FILES) {
     await new Promise((ok) => {
