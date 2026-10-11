@@ -69,6 +69,8 @@
     return span;
   };
 
+  /* 円の換算レート（1リンギット＝何円）。変えるときはここだけ */
+  App.rate = 38.7;
   App.fmt = {
     yen: (n) => "¥" + Math.round(n).toLocaleString("ja-JP"),
     rm: (n) => "RM" + (Math.round(n * 100) / 100).toLocaleString("en-MY", { minimumFractionDigits: 0, maximumFractionDigits: 2 }),
@@ -77,6 +79,24 @@
       return d.getMonth() + 1 + "/" + d.getDate() + "（" + "日月火水木金土"[d.getDay()] + "）";
     },
     mins: (m) => (m >= 60 ? Math.floor(m / 60) + "時間" + (m % 60 ? (m % 60) + "分" : "") : m + "分"),
+  };
+  // 文章の中の「RM◯」「RM◯〜◯」のあとに（約◯円）を足す
+  App.fmt.ry = (text) => {
+    if (typeof text !== "string" || !/RM\s?\d/.test(text) || /円）/.test(text)) return text;
+    const y = (v) => {
+      const n = parseFloat(v.replace(/,/g, "")) * App.rate;
+      return (n >= 100 ? Math.round(n / 10) * 10 : Math.round(n)).toLocaleString("ja-JP");
+    };
+    return text.replace(/RM\s?([\d,]+(?:\.\d+)?)(?:\s?[〜~\-–]\s?([\d,]+(?:\.\d+)?))?(前後〜|前後|〜)?/g, (m, a, b) =>
+      m + "（約" + y(a) + (b ? "〜" + y(b) : "") + "円）");
+  };
+  // データ全体の文字列に円を足す（地図・写真・割り勘の記録には触らない）
+  App.addYen = function () {
+    const walk = (o) => {
+      if (Array.isArray(o)) { for (let i = 0; i < o.length; i++) { if (typeof o[i] === "string") o[i] = App.fmt.ry(o[i]); else walk(o[i]); } }
+      else if (o && typeof o === "object") for (const k in o) { if (typeof o[k] === "string") { if (!/^https?:/.test(o[k])) o[k] = App.fmt.ry(o[k]); } else walk(o[k]); }
+    };
+    for (const k in App.data) if (!/^(hotelImgs|spotPhotos|ets)$/.test(k)) walk(App.data[k]);
   };
   App.todayISO = function () {
     // マレーシア時間（UTC+8）の日付
@@ -211,6 +231,7 @@
   }
 
   App.start = function () {
+    try { App.addYen(); } catch (e) { console.warn(e); }
     const hash = (location.hash || "").slice(1);
     let last = null;
     try { last = localStorage.getItem("mt:last"); } catch (e) {}

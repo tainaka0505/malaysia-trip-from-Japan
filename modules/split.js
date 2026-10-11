@@ -44,7 +44,7 @@ App.register({
     const membersCol = store.collection("split_members");
     const expCol = store.collection("split_expenses");
     const settingsDoc = store.doc("split_settings/main");
-    let members = [], expenses = [], rate = 35, loaded = { m: false, e: false };
+    let members = [], expenses = [], rate = App.rate || 38.7, loaded = { m: false, e: false };
     let tab = "list";
     try { tab = localStorage.getItem("mt:split-tab") || "list"; } catch (e) {}
 
