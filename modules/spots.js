@@ -1,7 +1,7 @@
 /* スポット（旅行雑誌ふうの紹介ページ）
    データは data/spots.js、写真は img/spots/<id>.jpg（クレジットは data/spot_photos.js に build で自動生成） */
 App.register({
-  id: "spots", title: "スポット", icon: "star", order: 45, nav: "more", wide: true, desc: "体験・絶景・食べ歩きの特集",
+  id: "spots", title: "スポット", short: "スポット", icon: "star", order: 25, nav: "main", wide: true, desc: "体験・絶景・食べ歩きの特集",
   render(el, { h, sheet, icon, param, go }) {
     const D = App.data, spots = D.spots, areas = D.areas, tags = D.foodTags, cats = D.spotCats;
     const photos = D.spotPhotos || {};

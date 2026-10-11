@@ -24,9 +24,17 @@ App.data.spotPhotos = {
 "f": "img/spots/bukitlarut.jpg",
 "c": "SRTG / CC BY-SA 3.0 / Wikimedia Commons（Greenery at Maxwell, Bukit Larut.jpg）"
 },
+"cameron": {
+"f": "img/spots/cameron.jpg",
+"c": "Jakub Hałun / CC BY 4.0 / Wikimedia Commons（Cameron Bharat Tea Plantation, Cameron Highlands, Malaysia, 20250829 1535 4120.jpg）"
+},
 "chewjetty": {
 "f": "img/spots/chewjetty.jpg",
 "c": "Cmglee / CC BY-SA 3.0 / Wikimedia Commons（Cmglee Penang Chew Jetty view.jpg）"
+},
+"chiling": {
+"f": "img/spots/chiling.jpg",
+"c": "Yousha Bin Younus / CC BY 3.0 / Wikimedia Commons（Chiling Waterfall River - panoramio.jpg）"
 },
 "chowkit": {
 "f": "img/spots/chowkit.jpg",
@@ -51,6 +59,10 @@ App.data.spotPhotos = {
 "fireflies": {
 "f": "img/spots/fireflies.jpg",
 "c": "*angys* / CC BY-SA 4.0 / Wikimedia Commons（Kuala Selangor firefly sanctuary (230316).jpg）"
+},
+"fruitfarm": {
+"f": "img/spots/fruitfarm.jpg",
+"c": "阿橋 HQ / CC BY-SA 2.0 / Wikimedia Commons（紫夢幻蕉 Musa ornata -檳城熱帶果園 Tropical Fruit Farm, Penang- (9198148873).jpg）"
 },
 "genting": {
 "f": "img/spots/genting.jpg",
@@ -88,6 +100,10 @@ App.data.spotPhotos = {
 "f": "img/spots/jonker.jpg",
 "c": "Philip Mallis / CC BY-SA 2.0 / Wikimedia Commons（Jonker Street Night Market in Melaka, Malaysia.jpg）"
 },
+"jugra": {
+"f": "img/spots/jugra.jpg",
+"c": "Slleong / CC0 / Wikimedia Commons（Jugra Hill 3.jpg）"
+},
 "keklok": {
 "f": "img/spots/keklok.jpg",
 "c": "This Photo was taken by Supanut Arunoprayote / CC BY 4.0 / Wikimedia Commons（Kek Lok Si Temple (I).jpg）"
@@ -116,13 +132,25 @@ App.data.spotPhotos = {
 "f": "img/spots/klcc.jpg",
 "c": "Bruce Poon / CC BY-SA 4.0 / Wikimedia Commons（Petronas twin towers at night.jpg）"
 },
+"klebang": {
+"f": "img/spots/klebang.jpg",
+"c": "Chongkian / CC BY-SA 4.0 / Wikimedia Commons（Klebang Beach.JPG）"
+},
 "kltower": {
 "f": "img/spots/kltower.jpg",
 "c": "Frostpolar / CC BY-SA 4.0 / Wikimedia Commons（Sky Deck at Kuala Lumpur Tower (Menara KL), Malaysia on 28 July 2020 at 172844.jpg）"
 },
+"kualakangsar": {
+"f": "img/spots/kualakangsar.jpg",
+"c": "Miss Prema Darshini / CC BY-SA 4.0 / Wikimedia Commons（Ubudiah Mosque Kuala Kangsar.jpg）"
+},
 "lazat": {
 "f": "img/spots/lazat.jpg",
 "c": "Jpatokal / CC BY-SA 4.0 / Wikimedia Commons（Nasi lemak on banana leaf.jpg）"
+},
+"mahmeri": {
+"f": "img/spots/mahmeri.jpg",
+"c": "Qhairy / CC0 / Wikimedia Commons（Mayin Jo’oh Mah Meri Masked Dance by Tompoq Topoh 08.jpg）"
 },
 "mamak": {
 "f": "img/spots/mamak.jpg",
@@ -152,9 +180,17 @@ App.data.spotPhotos = {
 "f": "img/spots/mosque.jpg",
 "c": "CEphoto, Uwe Aranas / CC BY-SA 3.0 / Wikimedia Commons（Kuala Lumpur Malaysia National-Mosque-02.jpg）"
 },
+"mossy": {
+"f": "img/spots/mossy.jpg",
+"c": "Pro QueeNia / CC BY-SA 4.0 / Wikimedia Commons（Trees through the misty, Mossy Forest, Cameron Highlands.jpg）"
+},
 "nationalpark": {
 "f": "img/spots/nationalpark.jpg",
 "c": "Asiadetailfeed / CC BY-SA 3.0 / Wikimedia Commons（Monkeybeach08.jpg）"
+},
+"pangkor": {
+"f": "img/spots/pangkor.jpg",
+"c": "Michael / Public domain / Wikimedia Commons（Sunset over Pangkor Island.jpg）"
 },
 "parasail": {
 "f": "img/spots/parasail.jpg",
@@ -163,6 +199,14 @@ App.data.spotPhotos = {
 "penanghill": {
 "f": "img/spots/penanghill.jpg",
 "c": "Richard Horvath / CC BY-SA 3.0 / Wikimedia Commons（Penang Hill Funicular Railway - panoramio.jpg）"
+},
+"pulauaman": {
+"f": "img/spots/pulauaman.jpg",
+"c": "Dreamtrooper / CC BY-SA 3.0 / Wikimedia Commons（Pulau Aman.JPG）"
+},
+"pulaubesar": {
+"f": "img/spots/pulaubesar.jpg",
+"c": "Adiputera / CC BY-SA 4.0 / Wikimedia Commons（Pulau Besar beach.jpg）"
 },
 "putrajaya": {
 "f": "img/spots/putrajaya.jpg",
@@ -175,6 +219,10 @@ App.data.spotPhotos = {
 "rivercruise": {
 "f": "img/spots/rivercruise.jpg",
 "c": "Annette Teng / CC BY 3.0 / Wikimedia Commons（Malacca by Night - panoramio (1).jpg）"
+},
+"sayong": {
+"f": "img/spots/sayong.jpg",
+"c": "Wikismktm / CC BY-SA 4.0 / Wikimedia Commons（Labu sayong warisan.jpg）"
 },
 "sekinchan": {
 "f": "img/spots/sekinchan.jpg",
@@ -231,5 +279,9 @@ App.data.spotPhotos = {
 "tualang": {
 "f": "img/spots/tualang.jpg",
 "c": "Tony Ng / CC BY-SA 3.0 / Wikimedia Commons（TT5 Tin Dredge - panoramio (4).jpg）"
+},
+"ulugeroh": {
+"f": "img/spots/ulugeroh.jpg",
+"c": "diego_cue / CC BY-SA 3.0 / Wikimedia Commons（Rafflesia flower - Cameron Highlands - Malaysia - panoramio.jpg）"
 }
 };

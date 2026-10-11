@@ -405,6 +405,9 @@ body.wide-view main{max-width:1180px}
 .mz-body{font-size:.95rem;line-height:1.85}
 .mz-actions{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 6px}
 .mz-actions .btn{flex:1 1 180px}
+
+.tabbar{grid-template-columns:repeat(6,1fr)}
+.tab span{font-size:.64rem;white-space:nowrap}
 </style>
 </head>
 <body>
@@ -448,7 +451,7 @@ const FILES = [
   "modules/itinerary.js", "modules/map.js", "modules/spots.js", "modules/transit.js", "modules/split.js",
   "modules/packing.js", "modules/guide.js",
 ];
-const V = "202610112251";
+const V = "202610112312";
 async function boot(pass) {
   for (const f of FILES) {
     await new Promise((ok) => {

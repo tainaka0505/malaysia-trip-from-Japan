@@ -1,6 +1,6 @@
 /* 観光地・体験データ
    スポットを足すときは App.data.spots に1件足すだけでOK。写真は img/spots/<id>.jpg を置いて build で取り込む。
-   cat: exp=体験 / view=絶景 / food=食 / night=夜 / rare=日本では珍しい
+   cat: exp=体験 / view=絶景 / food=食 / night=夜 / rare=日本では珍しい / rural=田舎・郊外
    jp: 「日本とここが違う」の一言（雑誌の囲み記事になる）
    lead: カードに出るキャッチコピー
    ll: [緯度, 経度]（アプリの地図・Googleマップ用。だいたいの位置）
@@ -10,6 +10,7 @@
 App.data.foodTags = { cn: "中華", herb: "香草注意", hot: "辛い", my: "マレー", in: "インド系", sw: "甘い" };
 App.data.spotCats = [
   { id: "rare", name: "日本では珍しい" },
+  { id: "rural", name: "田舎・郊外" },
   { id: "exp", name: "体験" },
   { id: "view", name: "絶景" },
   { id: "night", name: "夜" },
@@ -54,7 +55,7 @@ App.data.spots = [
     foods: [], q: "Penang Hill Lower Station", ll: [5.4241, 100.269],
   },
   {
-    id: "nationalpark", area: "penang", cat: ["exp", "rare"], name: "ペナン国立公園とモンキービーチ", en: "Penang National Park",
+    id: "nationalpark", area: "penang", cat: ["rural", "exp", "rare"], name: "ペナン国立公園とモンキービーチ", en: "Penang National Park",
     lead: "道のない浜へ、漁船のボートで上陸する",
     jp: "淡水の上に海水が沈んでいて混ざらない「二層の湖（メロミクティック湖）」がある。世界でもめずらしい地形。",
     desc: "島の北西の端にある、世界でもいちばん小さい部類の国立公園。ジャングルの道を歩くか、ボートで浜に渡る。サルが集まるモンキービーチ、ウミガメ保護センターのあるタートルビーチ（クラチュ浜）、塩水と淡水が層になった湖がある。",
@@ -167,7 +168,7 @@ App.data.spots = [
     foods: [], q: "Batu Ferringhi beach", ll: [5.4752, 100.2486],
   },
   {
-    id: "balikpulau", area: "penang", cat: ["food"], name: "バリックプラウ", en: "Balik Pulau",
+    id: "balikpulau", area: "penang", cat: ["rural", "food"], name: "バリックプラウ", en: "Balik Pulau",
     lead: "島の裏側の果樹園と田んぼ",
     desc: "島の裏側の山あいの村。ドリアンやナツメグの果樹園と田んぼが広がる、のんびりした田舎。",
     stay: "半日", hours: "", price: "", access: "ジョージタウンからGrabで約30〜40分。バスは本数が少ない",
@@ -175,9 +176,28 @@ App.data.spots = [
     foods: [["バリックプラウ・ラクサ", "地元で人気のアッサムラクサ", "herb"], ["ナツメグジュース", "さわやかな甘酸っぱさ", "sw"]], q: "Balik Pulau", ll: [5.3497, 100.2347],
   },
 
+    {
+    id: "fruitfarm", area: "penang", cat: ["rural", "food", "exp"], name: "トロピカル・フルーツファーム", en: "Penang Tropical Fruit Farm",
+    lead: "山の斜面の果樹園で、名前も知らない果物を食べくらべ",
+    jp: "250種類以上の熱帯の果樹が植わっていて、木になっている状態で見られる。スーパーの果物売り場では出会えない形・色・味ばかり。",
+    desc: "島の西側、テルッ・バハンからバリックプラウへ抜ける山道の途中にある果樹園。ガイドと30分ほど園内を歩き、最後に季節の果物の盛り合わせとフレッシュジュースを味わう。",
+    stay: "1〜1.5時間", hours: "毎日 9:00〜17:00", price: "外国人 大人 RM58（果物とジュース付き）／RM48（なし）（2025年）", access: "ジョージタウンからGrabで約50分。ESCAPE・エントピアから車で約10分",
+    tips: ["2月は果物の端境期で種類が少なめ", "バリックプラウへ向かう途中に寄ると効率がいい"],
+    foods: [["季節のフルーツ盛り合わせ", "スターフルーツ、ドラゴンフルーツ、パパイヤなど", "sw"]], q: "Tropical Fruit Farm Penang", ll: [5.415, 100.2171],
+  },
+  {
+    id: "pulauaman", area: "penang", cat: ["rural", "rare"], name: "プラウ・アマン（漁村の小島）", en: "Pulau Aman",
+    lead: "往復RM6の船で、観光地化していない島の村へ",
+    jp: "車がほとんど走っていない、数百人が暮らす漁村だけの島。ペナン大橋を遠くに見ながら、村の路地と海辺をのんびり歩く。",
+    desc: "ペナン島の対岸（本土側）、第2ペナン大橋の近くに浮かぶ小島。南のバトゥ・ムサン桟橋から小さな船で渡る。島には漁村と小さな食堂、浜辺があるだけ。",
+    stay: "半日", hours: "船は日中（本数は少なめ）", price: "船 往復 RM6前後", access: "バトゥ・ムサン桟橋（本土側）。ジョージタウンからGrabで約40分",
+    tips: ["帰りの船の時間を最初に確認", "桟橋の食堂でアイスカチャンとラクサが食べられる", "島の中に店はほとんどないので水を持っていく"],
+    foods: [], q: "Batu Musang Jetty", ll: [5.2741, 100.3895],
+  },
+
   /* ================= ペラ ================= */
   {
-    id: "tempurung", area: "perak", pick: true, cat: ["exp", "rare"], name: "グア・テンプルン（洞窟探検）", en: "Gua Tempurung",
+    id: "tempurung", area: "perak", pick: true, cat: ["rural", "exp", "rare"], name: "グア・テンプルン（洞窟探検）", en: "Gua Tempurung",
     lead: "地下の川を、腰まで水につかって進む",
     jp: "日本の鍾乳洞は遊歩道を歩くだけのことが多い。ここの「ウェットツアー」はヘルメットとライトをつけ、地下の川をはい進む本物の探検。",
     desc: "マレー半島でも最大級の石灰岩の洞窟。前半は階段と通路で巨大な空洞を見て回り、後半のウェットツアーでは地下の川を歩き、狭いすき間をくぐって出口へ抜ける。",
@@ -186,7 +206,7 @@ App.data.spots = [
     foods: [], q: "Gua Tempurung", ll: [4.4152, 101.188],
   },
   {
-    id: "rafting", area: "perak", pick: true, cat: ["exp", "rare"], name: "ゴペンの急流ラフティング", en: "White water rafting, Gopeng (Kampar River)",
+    id: "rafting", area: "perak", pick: true, cat: ["rural", "exp", "rare"], name: "ゴペンの急流ラフティング", en: "White water rafting, Gopeng (Kampar River)",
     lead: "ジャングルの川を、22の急流で下る",
     jp: "両岸が熱帯雨林。日本のラフティングと違い、水がぬるく、雨季明けの水量の多い時期にあたる。",
     desc: "イポー南のゴペンを流れるカンパー川。約7kmのあいだに急流が最大22か所ある（難しさは2〜3級と、初めてでも参加できる程度）。体験宿（エコリゾート）が受付・送迎・昼食をセットにしている。",
@@ -240,7 +260,7 @@ App.data.spots = [
     foods: [], q: "Han Chin Pet Soo", ll: [4.5958, 101.0786],
   },
   {
-    id: "kellie", area: "perak", cat: ["view"], name: "ケリーの城", en: "Kellie's Castle",
+    id: "kellie", area: "perak", cat: ["rural", "view"], name: "ケリーの城", en: "Kellie's Castle",
     lead: "ジャングルの丘に残された、未完成の洋館",
     desc: "スコットランド出身の農園主が1915年から建てたが、本人の死で未完成のまま残った屋敷。ムーア風・インド風がまざった建築で、屋上まで上がれる。映画『アンナと王様』の撮影地。",
     stay: "1時間", hours: "9:00〜18:00", price: "外国人 RM10前後", access: "イポーからGrabで約30分（バトゥ・ガジャ）。グア・テンプルンへ行く途中に寄れる",
@@ -248,7 +268,7 @@ App.data.spots = [
     foods: [], q: "Kellie's Castle", ll: [4.4743, 101.0879],
   },
   {
-    id: "tualang", area: "perak", cat: ["food", "rare"], name: "タンジュントゥアラン（川エビ）", en: "Tanjung Tualang",
+    id: "tualang", area: "perak", cat: ["rural", "food", "rare"], name: "タンジュントゥアラン（川エビ）", en: "Tanjung Tualang",
     lead: "頭の大きな川エビと、陸に残った錫の採掘船",
     jp: "錫を掘っていた巨大な浚渫（しゅんせつ）船TT5が、池に浮かんだまま残っている。中を歩いて見学できるのはマレーシアでもここだけ。",
     desc: "イポー南の小さな町。名物は大頭蝦（大きな頭の川エビ）。醤油と紹興酒で蒸すのが定番。町の近くには錫を掘っていた巨大な採掘船TT5が残っている。",
@@ -274,7 +294,7 @@ App.data.spots = [
     foods: [["ラルット・マタンの屋台", "タイピンの中華系屋台街", "cn"]], q: "Taiping Lake Gardens", ll: [4.853, 100.75],
   },
   {
-    id: "bukitlarut", area: "perak", cat: ["exp", "view"], name: "ブキッ・ラルット（マクスウェル・ヒル）", en: "Bukit Larut (Maxwell Hill)",
+    id: "bukitlarut", area: "perak", cat: ["rural", "exp", "view"], name: "ブキッ・ラルット（マクスウェル・ヒル）", en: "Bukit Larut (Maxwell Hill)",
     lead: "ヘアピン70か所、ランドローバーで雲の中へ",
     jp: "一般車は入れない細い山道を、管理局のランドローバーで登る。標高約1,000mの、植民地時代の避暑地。",
     desc: "タイピンの裏にそびえる、マレーシアで最も雨が多い場所の一つ。山頂付近は涼しく、霧の森と古いバンガローが残る。",
@@ -283,7 +303,7 @@ App.data.spots = [
     foods: [], q: "Bukit Larut Land Rover station", ll: [4.8624, 100.7568],
   },
   {
-    id: "sepetangboat", area: "perak", cat: ["exp", "night", "rare"], name: "クアラスプタンのボート（ワシ・ホタル）", en: "Kuala Sepetang boat tours",
+    id: "sepetangboat", area: "perak", cat: ["rural", "exp", "night", "rare"], name: "クアラスプタンのボート（ワシ・ホタル）", en: "Kuala Sepetang boat tours",
     lead: "マングローブの川を、ワシと水上の村へ",
     jp: "河口のマングローブ林で、野生のシロハラウミワシやトビが船のまわりを飛ぶ。夜はホタルが木に集まって点滅する。",
     desc: "クアラスプタンの船着き場から出るボート。昼はマングローブの川を下って水上の養殖場や漁村へ、夜はホタルの木を見に行く。",
@@ -292,7 +312,7 @@ App.data.spots = [
     foods: [], q: "Kuala Sepetang jetty", ll: [4.8366, 100.6304],
   },
   {
-    id: "sepetang", area: "perak", cat: ["rare", "food"], name: "クアラスプタンの炭焼き工場", en: "Kuala Sepetang Charcoal Factory",
+    id: "sepetang", area: "perak", cat: ["rural", "rare", "food"], name: "クアラスプタンの炭焼き工場", en: "Kuala Sepetang Charcoal Factory",
     lead: "マングローブの木を、ドーム窯で1か月かけて炭に",
     jp: "日本の炭焼きとは材料も窯の形も違う。マングローブの丸太を、レンガのドーム形の窯で蒸し焼きにする。",
     desc: "マングローブの川沿いにある中華系の漁村。昔ながらの炭焼き工場、マングローブ林の遊歩道、ボートで行く水上の村がある。",
@@ -300,6 +320,70 @@ App.data.spots = [
     tips: ["帰りのGrabがつかまりにくいので、行きのドライバーに帰りも頼むかチャーターで", "夜はホタルのボートツアーもある"],
     foods: [["中華系の海鮮料理", "エビ・カニ・貝を安く食べられる", "cn"], ["ワンタンミー", "漁村の朝の定番", "cn"]],
     q: "Kuala Sepetang Charcoal Factory", ll: [4.836, 100.629],
+  },
+
+    {
+    id: "ulugeroh", area: "perak", pick: true, cat: ["rural", "exp", "rare"], name: "ウル・ゲロのラフレシア", en: "Ulu Geroh (Rafflesia, Gopeng)",
+    lead: "先住民セマイ族のガイドと、世界最大の花を探しにジャングルへ",
+    jp: "直径50cmを超える、葉も茎もない巨大な花。日本では植物園でも見られない。案内してくれるのは森に住む先住民（オラン・アスリ）のセマイの人たち。",
+    desc: "ゴペンから山に入ったセマイ族の村ウル・ゲロ。村のガイドについてジャングルの斜面を登り、地面から直接咲くラフレシアを見に行く。周りの川では国のチョウ、アカエリトリバネアゲハが群れることもある。",
+    stay: "半日", hours: "ガイドと要相談（花が咲いているときだけ案内）", price: "ガイド料は人数・内容で変わる（ツアー会社経由が確実）", access: "ゴペンの町から約12km（車で30分）。道が悪く、四駆か村の送迎で",
+    tips: ["花は咲く時期が決まっておらず、咲いているかは2〜3日前にしかわからない。日程に余裕を", "道は急で泥とヒルが多い。長ズボン、靴、ヒルよけの靴下", "マレー語が話せない場合はエコツアー会社に頼む", "ゴペンのラフティング・グア・テンプルンと同じエリア"],
+    foods: [], q: "Ulu Geroh Gopeng", ll: [4.4166, 101.2502],
+  },
+  {
+    id: "kualakangsar", area: "perak", cat: ["rural", "view", "food"], name: "クアラカンサー（王さまの町）", en: "Kuala Kangsar",
+    lead: "金色の玉ねぎ屋根のモスクと、川向こうの村",
+    jp: "ペラ州の王宮がある、のどかな川沿いの町。金色のドームのウブディア・モスクは「マレーシアでいちばん美しいモスク」と言われる。",
+    desc: "イポーとタイピンのあいだにある王都。ペラ川のほとりにウブディア・モスクと王宮、王族ゆかりの古い建物が並ぶ。町の名物は地元の麺料理ラクサ・クアラー。川の向こうは焼き物の村サヨン。",
+    stay: "半日", hours: "モスクは礼拝の時間を除く日中", price: "無料", access: "ETS・KTMのクアラカンサー駅から町まで約2km（Grab）。タイピンから約30分、イポーから約40分",
+    tips: ["タイピン→イポーの移動の途中に寄るのがちょうどいい", "モスクは服装に注意（肩・膝を隠す）"],
+    foods: [["ラクサ・クアラー", "クアラカンサー名物の魚のスープ麺", "my herb"], ["ラクサ・テルール・サラン", "卵を乗せたご当地版", "my"]], q: "Ubudiah Mosque Kuala Kangsar", ll: [4.7794, 100.9565],
+  },
+  {
+    id: "sayong", area: "perak", cat: ["rural", "exp", "rare"], name: "サヨン村のラブ・サヨン（黒い壺）", en: "Labu Sayong, Kampung Sayong",
+    lead: "300年続く、ひょうたん形の黒い水がめを手で", 
+    jp: "焼いたあとに籾殻（もみがら）に埋めて真っ黒にツヤを出す、マレー独特の焼き方。中に入れた水がひんやりして体にいいと言われている。",
+    desc: "クアラカンサーの川向こう、田んぼに囲まれたサヨン村は、ひょうたん形の焼き物ラブ・サヨンの発祥地。今も手づくりしている工房が数軒あり、見学や、土をこねて形をつくる体験ができるところもある。",
+    stay: "1〜2時間", hours: "工房による（要予約）", price: "工房による", access: "クアラカンサーの町からGrabで約10分",
+    tips: ["体験は予約サイト（LokaLocalなど）や工房に事前に連絡", "割れ物なので、買うなら緩衝材を頼む"],
+    foods: [], q: "Labu Sayong Kampung Sayong", ll: [4.7905, 100.9468],
+  },
+  {
+    id: "cameron", area: "perak", cat: ["rural", "view"], name: "キャメロン・ハイランドの紅茶畑", en: "Cameron Highlands (BOH Sungai Palas)",
+    lead: "標高1,500m、山肌を埋める緑のじゅうたん",
+    jp: "赤道近くなのに朝晩は15℃前後まで下がる高原。イギリス時代に始まった紅茶畑が、日本の茶畑よりはるかに急な斜面まで広がっている。",
+    desc: "イポーから山道を上がった高原の避暑地（パハン州）。紅茶会社BOHのスンガイ・パラス茶園では、茶畑を見下ろすテラスでお茶とスコーンを楽しめる。いちご農園や野菜の市場も。",
+    stay: "1日", hours: "茶園のカフェは朝〜夕方（月曜休みのことあり）", price: "茶園の見学は無料、お茶とケーキで RM15〜30前後", access: "イポーから車で約1.5〜2時間。イポー発の日帰りツアー・チャーターが現実的",
+    tips: ["長袖の上着が必要", "週末は山道が大渋滞", "苔の森（モッシーフォレスト）とセットで"],
+    foods: [["BOHの紅茶とスコーン", "茶畑を見ながら", "sw"], ["スチームボート", "高原野菜の鍋", "cn"]], q: "BOH Tea Centre Sungai Palas", ll: [4.5185, 101.4108],
+  },
+  {
+    id: "mossy", area: "perak", cat: ["rural", "exp", "rare"], name: "キャメロンの苔の森", en: "Mossy Forest, Gunung Brinchang",
+    lead: "雲の中の、苔に覆われたおとぎ話の森",
+    jp: "標高2,000m近い、いつも雲がかかる山頂の森。木の幹も枝も地面も厚い苔に包まれ、ウツボカズラ（食虫植物）が野生で生えている。",
+    desc: "キャメロン・ハイランドの最高地点ブリンチャン山の上の雲霧林。四駆で茶畑の中を上がり、木道や森の小道を歩く。",
+    stay: "2〜3時間（四駆ツアーで）", hours: "朝がおすすめ", price: "木道 大人 RM10前後。四駆ツアーは別料金", access: "キャメロン・ハイランドのブリンチャンから四駆ツアー（スンガイ・パラス茶園経由）",
+    tips: ["保護のため立入制限や閉鎖がある。現地のツアーで最新状況を確認", "霧で濡れるので雨具と滑りにくい靴"],
+    foods: [], q: "Mossy Forest Cameron Highlands", ll: [4.5163, 101.3829],
+  },
+  {
+    id: "burmesepool", area: "perak", cat: ["rural", "exp"], name: "バーミーズ・プール（タイピンの天然プール）", en: "Burmese Pool (Batu Hampar), Taiping",
+    lead: "地元の子どもが飛びこむ、ジャングルの岩のプール",
+    jp: "公園のすぐ裏、山から流れてきた川が岩の上で小さな滝と淵をつくっている。地元の家族が普段着で水浴びに来る、生活の中の水遊び場。",
+    desc: "タイピン・レイクガーデンの奥、ブキッ・ラルットのふもとにある渓流。大きな一枚岩の上を水が流れ、いくつもの淵ができている。",
+    stay: "1時間", hours: "日中", price: "無料", access: "タイピン・レイクガーデンからGrabで約5分",
+    tips: ["岩が滑りやすい。サンダルよりかかとのある靴", "雨の日・雨のあとは鉄砲水の危険があるので入らない", "肌を出しすぎない服で（地元の人は服のまま入る）"],
+    foods: [], q: "Burmese Pool Taiping", ll: [4.8592, 100.7634],
+  },
+  {
+    id: "pangkor", area: "perak", cat: ["rural", "view", "food"], name: "パンコール島", en: "Pulau Pangkor",
+    lead: "ピンクのワゴンタクシーで回る、漁村の島",
+    jp: "島の中の移動はピンク色のワゴンタクシー。干物（イカ・魚）の工場や中華系の漁村、マレーの村、ビーチが小さな島にまとまっている。",
+    desc: "ルムッの港から船で40分ほどの島。観光地のリゾートと、干物づくりの漁村の暮らしが同居している。夕日のきれいな西側のビーチと、干物の店が並ぶ東側の町がある。",
+    stay: "1日〜1泊", hours: "船は7:00〜20:30ごろ、30〜45分おき", price: "船 往復 RM10前後", access: "イポーからバスか車でルムッへ約1.5〜2時間、船で約40分",
+    tips: ["日帰りは忙しい。1泊すると夕日が見られる", "お土産は干物とイカの加工品"],
+    foods: [["干物・イカの燻製", "島の名産", "cn"], ["海鮮料理", "", "cn"]], q: "Pangkor Jetty", ll: [4.2153, 100.5605],
   },
 
   /* ================= マラッカ ================= */
@@ -372,6 +456,25 @@ App.data.spots = [
     stay: "1〜2時間", hours: "金〜日 18:00ごろ〜23:00ごろ", price: "", access: "オランダ広場から徒歩5分",
     tips: ["土曜の夜がいちばんにぎやか", "スリに注意。バッグは前に"],
     foods: [["パイティー", "サクサクのカップに具を詰めた前菜", "cn"], ["ドリアン・チェンドル", "ドリアン入りのかき氷", "sw"]], q: "Jonker Walk Night Market", ll: [2.1955, 102.247],
+  },
+
+    {
+    id: "pulaubesar", area: "melaka", cat: ["rural", "rare"], name: "プラウ・ブサール", en: "Pulau Besar",
+    lead: "伝説の聖者の墓と、廃墟のリゾートが残る島",
+    jp: "イスラムの聖者が眠ると伝えられる巡礼の島。一方で、閉鎖されたリゾートやゴルフ場が森にのみこまれつつある。神聖さと廃墟が同居する不思議な場所。",
+    desc: "マラッカの南の沖に浮かぶ島。巡礼者が訪れる墓や井戸、割れた岩（バトゥ・ブラ）と、遊歩道のある浜がある。島はほとんど歩いて回れる。",
+    stay: "半日", hours: "船 8:00、12:00、17:00ごろ（帰りは15分後）。2023年時点", price: "船 往復 RM15前後／貸切スピードボート RM120（8人まで）", access: "旧市街から車で約30分のアンジュン・バトゥ桟橋",
+    tips: ["船の本数が少ない。最終便を逃さない", "干潮のときは浜にボートで上陸することがある", "聖地なので肌を出しすぎない服で", "桟橋はGrabがつかまりにくい。帰りの車を予約しておく"],
+    foods: [], q: "Jeti Anjung Batu", ll: [2.1096, 102.3317],
+  },
+  {
+    id: "klebang", area: "melaka", cat: ["rural", "food"], name: "クレバンのココナッツシェイク", en: "Klebang Original Coconut Shake",
+    lead: "海辺の屋台で、バニラアイス入りのヤシの実シェイク",
+    jp: "ヤシの実の果汁と果肉をアイスと一緒にミキサーにかけた、マラッカ名物のドリンク。屋台に行列ができる。",
+    desc: "旧市街から北に車で10分ほどの、クレバンの海辺にある屋台。シェイクを買って、埋め立て地の砂浜で夕日を見るのが地元の過ごし方。",
+    stay: "30分〜1時間", hours: "昼〜夕方（売り切れ次第）", price: "1杯 RM数〜10前後", access: "旧市街からGrabで約10〜15分",
+    tips: ["夕方に行って、そのまま浜で夕日を見る"],
+    foods: [["ココナッツシェイク", "冷たくて甘い", "sw"], ["ピサン・ゴレン（揚げバナナ）", "隣の屋台で", "sw"]], q: "Klebang Original Coconut Shake", ll: [2.2152, 102.1942],
   },
 
   /* ================= クアラルンプール ================= */
@@ -500,7 +603,7 @@ App.data.spots = [
 
   /* ================= KL郊外・セランゴール ================= */
   {
-    id: "melawati", area: "selangor", pick: true, cat: ["exp", "rare"], name: "ブキッ・メラワティのシルバーリーフモンキー", en: "Bukit Melawati, Kuala Selangor",
+    id: "melawati", area: "selangor", pick: true, cat: ["rural", "exp", "rare"], name: "ブキッ・メラワティのシルバーリーフモンキー", en: "Bukit Melawati, Kuala Selangor",
     lead: "銀色のサルと、オレンジ色の赤ちゃん",
     jp: "日本のニホンザルとはまるで違う、銀灰色の毛の穏やかなサル。赤ちゃんだけが鮮やかなオレンジ色。手から野菜を食べに来る。",
     desc: "クアラセランゴールの丘の上にある古い砦の跡。シルバーリーフモンキー（シルバールトン）の群れが住んでいて、すぐ近くで見られる。夕方にここで過ごし、夜はホタルのボートへ、が定番の流れ。",
@@ -509,7 +612,7 @@ App.data.spots = [
     foods: [], q: "Bukit Melawati", ll: [3.3404, 101.2466],
   },
   {
-    id: "fireflies", area: "selangor", cat: ["night", "rare"], name: "クアラセランゴールのホタル", en: "Kampung Kuantan Fireflies",
+    id: "fireflies", area: "selangor", cat: ["rural", "night", "rare"], name: "クアラセランゴールのホタル", en: "Kampung Kuantan Fireflies",
     lead: "川岸の木が、まるごと点滅する",
     jp: "日本のホタルはふわふわ飛ぶが、ここのホタルは一本の木に何千匹もとまって、そろって点滅する。木全体がクリスマスツリーのよう。",
     desc: "川沿いのマングローブの木に、数え切れないホタルが光る。手こぎボートで静かに近づく。",
@@ -518,7 +621,7 @@ App.data.spots = [
     foods: [], q: "Kampung Kuantan Fireflies Park", ll: [3.3612, 101.3007],
   },
   {
-    id: "ketam", area: "selangor", cat: ["exp", "rare", "food"], name: "プラウ・ケタム（カニの島）", en: "Pulau Ketam",
+    id: "ketam", area: "selangor", cat: ["rural", "exp", "rare", "food"], name: "プラウ・ケタム（カニの島）", en: "Pulau Ketam",
     lead: "島全体が、海の上に建った漁村",
     jp: "マングローブの島に、木の杭の上に家・道・学校まで建っている。車は走っておらず、移動は板の道と自転車だけ。",
     desc: "ポート・クランから船で約30〜40分の、中華系の漁村の島。家も道路も杭の上にあり、潮が引くと下の泥にカニがいる。カニや海鮮の店が並ぶ。",
@@ -527,7 +630,7 @@ App.data.spots = [
     foods: [["カニ料理", "チリクラブ・胡椒炒めなど", "cn hot"]], q: "Pulau Ketam jetty Port Klang", ll: [3.0233, 101.2549],
   },
   {
-    id: "genting", area: "selangor", cat: ["view", "exp"], name: "アワナ・スカイウェイ（ゲンティン）", en: "Awana Skyway, Genting Highlands",
+    id: "genting", area: "selangor", cat: ["rural", "view", "exp"], name: "アワナ・スカイウェイ（ゲンティン）", en: "Awana Skyway, Genting Highlands",
     lead: "雲の中をのぼる、ジャングルの上のゴンドラ",
     jp: "標高差1,000m以上を、熱帯雨林の真上を通って一気にのぼる。上は気温が20℃くらいまで下がり、雲の中に入る。",
     desc: "KLの北東、標高約1,800mの高原リゾート、ゲンティン・ハイランドへのゴンドラ。途中で山の中腹の中国寺院（清水岩廟）の駅に降りられる。",
@@ -536,7 +639,7 @@ App.data.spots = [
     foods: [], q: "Awana Skyway", ll: [3.4041, 101.7885],
   },
   {
-    id: "skytrex", area: "selangor", cat: ["exp"], name: "スカイトレックス・アドベンチャー", en: "Skytrex Adventure, Sungai Congkak",
+    id: "skytrex", area: "selangor", cat: ["rural", "exp"], name: "スカイトレックス・アドベンチャー", en: "Skytrex Adventure, Sungai Congkak",
     lead: "川の上を、ジップラインで何十本も渡る",
     jp: "ハーネス1本で、木から木へ自分で移っていく。日本のアスレチックより高く、本数が多い。",
     desc: "KLの東、スンガイ・チョンカックの森の中にある樹上アスレチック。川の上を越えるジップライン（フライングフォックス）やロープの吊り橋を、自分でカラビナをかけ替えながら進む。",
@@ -545,7 +648,7 @@ App.data.spots = [
     foods: [], q: "Skytrex Adventure Sungai Congkak", ll: [3.2133, 101.8484],
   },
   {
-    id: "putrajaya", area: "selangor", cat: ["view", "rare"], name: "プトラジャヤのピンクモスク", en: "Putra Mosque, Putrajaya",
+    id: "putrajaya", area: "selangor", cat: ["rural", "view", "rare"], name: "プトラジャヤのピンクモスク", en: "Putra Mosque, Putrajaya",
     lead: "湖に映る、バラ色のドーム",
     desc: "政府機関が集まる計画都市プトラジャヤの湖のほとりに立つ、ピンク色の花崗岩のモスク。ローブを借りて中に入れる。湖のクルーズ船もある。",
     stay: "1〜2時間", hours: "礼拝の時間を除く日中", price: "無料（ローブ貸出あり）", access: "KLセントラルからKLIAトランジットでプトラジャヤ駅、そこからGrabで約10分",
@@ -553,7 +656,7 @@ App.data.spots = [
     foods: [], q: "Putra Mosque", ll: [2.9363, 101.6896],
   },
   {
-    id: "sekinchan", area: "selangor", cat: ["view", "food"], name: "スキンチャン", en: "Sekinchan",
+    id: "sekinchan", area: "selangor", cat: ["rural", "view", "food"], name: "スキンチャン", en: "Sekinchan",
     lead: "一面の田んぼと、願い事の木",
     desc: "一面の田んぼと中華系の漁村。海辺には願い事を書いた赤い札を結ぶ木（願い事の浜）がある。",
     stay: "半日", hours: "", price: "", access: "KLから車で約2時間。公共交通は不便なのでチャーター車が現実的",
@@ -567,5 +670,42 @@ App.data.spots = [
     stay: "1時間", hours: "店によって朝〜昼のみ", price: "1人 RM20〜30", access: "KLセントラルからKTMコミューター（ポートクラン線）で約1時間",
     tips: ["朝に行く店が多い。午後も開いている店を事前に確認", "油條（揚げパン）をスープにひたして食べる"],
     foods: [["バクテー（肉骨茶）", "豚肉の漢方スープ。ご飯と中国茶と一緒に", "cn"]], q: "Klang Bak Kut Teh", ll: [3.044, 101.448],
+  },
+
+  {
+    id: "mahmeri", area: "selangor", pick: true, cat: ["rural", "exp", "rare"], name: "マ・メリ族の文化村（ケアリー島）", en: "Mah Meri Cultural Village, Carey Island",
+    lead: "精霊の仮面と、ヤシの葉で編む飾り",
+    jp: "海辺に住む先住民マ・メリの村。精霊をかたどった木彫りの仮面はユネスコにも認められた手しごと。ヤシの若葉を編む体験もできる。",
+    desc: "KLの南西、アブラヤシ農園が広がるケアリー島にある先住民の村。ギャラリーで仮面や彫刻を見て、伝統の家に入り、編みもの・仮面の踊りなどの体験ができる。",
+    stay: "2〜4時間", hours: "9:00〜18:00、月曜休み", price: "入場 RM15前後（体験は別）", access: "KLから車で約1時間。公共交通はないのでチャーターかGrab",
+    tips: ["体験や踊りは事前に問い合わせると確実", "近くのジュグラの丘（パラグライダー）、タンジュン・スパットとセットで1日コースに"],
+    foods: [["クトゥパッ", "ヤシの葉で包んだご飯", "my"]], q: "Mah Meri Cultural Village", ll: [2.8531, 101.3605],
+  },
+  {
+    id: "jugra", area: "selangor", cat: ["rural", "exp", "view"], name: "ジュグラの丘でタンデム・パラグライダー", en: "Tandem paragliding, Bukit Jugra",
+    lead: "インストラクターと一緒に、田園と海峡の上を飛ぶ",
+    jp: "日本では山の上から飛ぶことが多いが、ここは海辺の小さな丘から飛んで、ヤシ林と田んぼとマラッカ海峡を見下ろす。",
+    desc: "KLの南西、海沿いの小高い丘ブキッ・ジュグラ。灯台の横の離陸地から、インストラクターと2人乗りで飛ぶ。丘の上からの景色だけでも見に行く価値がある。",
+    stay: "1.5〜2.5時間（飛ぶのは5〜10分）", hours: "2〜10月の平日 9:00〜17:00（風しだい）", price: "1人 US$67前後（予約サイトの例）", access: "KLから車で約1時間（バンティン）",
+    tips: ["風で中止・待ちがよくある。時間に余裕を", "写真・動画は込みのことが多い", "Grabが少ない地域。帰りの車を確保しておく"],
+    foods: [], q: "Bukit Jugra paragliding", ll: [2.8396, 101.4124],
+  },
+  {
+    id: "tanjungsepat", area: "selangor", cat: ["rural", "food"], name: "タンジュン・スパット", en: "Tanjung Sepat",
+    lead: "海鮮バクテーの朝ごはんと、恋人たちの桟橋",
+    jp: "豚肉ではなくエビや魚を煮こんだ「海鮮バクテー」は、この漁村ならでは。朝だけ開く店に地元の人が集まる。",
+    desc: "KLから車で1時間半ほどの中華系の漁村。海に突き出た「ラバーズ・ブリッジ」、手づくりの肉まんの老舗、ドラゴンフルーツ農園、薪で焙煎するコーヒー屋がある。",
+    stay: "半日", hours: "海鮮バクテーは朝〜昼まで", price: "海鮮バクテー 2人で RM20〜40前後", access: "KLから車で約1.5時間",
+    tips: ["朝に着いて海鮮バクテー→桟橋→農園、の順で", "週末は混む"],
+    foods: [["海鮮バクテー", "エビと魚の漢方スープ", "cn"], ["肉まん（海友興）", "1962年からの老舗", "cn"], ["ドラゴンフルーツ", "道ばたで安く買える", "sw"]], q: "Tanjung Sepat Lover's Bridge", ll: [2.6571, 101.5606],
+  },
+  {
+    id: "chiling", area: "selangor", cat: ["rural", "exp"], name: "スンガイ・チリンの滝（川わたりトレッキング）", en: "Sungai Chiling Waterfall",
+    lead: "ロープをつかんで川を5回わたり、ジャングルの滝へ",
+    jp: "日本の沢登りと違い、熱帯雨林の中を胸まで水につかる川わたりを何度もくり返す。川は大型の魚（マシール）の保護区。",
+    desc: "KLの北、クアラクブバルの山の中にある滝。片道約2.4kmの道に、ロープを頼りにわたる川が5か所ある。最後に大きな滝つぼに出る。",
+    stay: "半日（歩くのは往復1.5〜3時間）", hours: "週末・祝日 8:00〜（平日は閉まっていることが多い）", price: "許可証 RM5（ネットで事前申請）＋入口で RM5", access: "KLから車で約1.5時間",
+    tips: ["森林局のサイトで48時間前までに許可証を申請（1日500人まで）", "雨のあとは水位が上がって危険。雨季は閉鎖", "中は飲食禁止。ペットボトル・ビニールは預かり金制"],
+    foods: [], q: "Sungai Chiling Waterfall", ll: [3.5991, 101.7374],
   },
 ];

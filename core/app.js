@@ -162,7 +162,7 @@
 
   function renderNav() {
     const nav = document.getElementById("tabbar");
-    const main = modules.filter((m) => m.nav === "main").slice(0, 4);
+    const main = modules.filter((m) => m.nav === "main").slice(0, 5);
     const more = modules.filter((m) => !main.includes(m));
     const moreActive = current && more.includes(current);
     const btn = (m) =>
@@ -191,7 +191,7 @@
   }
 
   function openMore() {
-    const main = modules.filter((m) => m.nav === "main").slice(0, 4);
+    const main = modules.filter((m) => m.nav === "main").slice(0, 5);
     const more = modules.filter((m) => !main.includes(m));
     let close;
     const list = h(
