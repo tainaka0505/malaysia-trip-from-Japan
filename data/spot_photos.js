@@ -28,6 +28,10 @@ App.data.spotPhotos = {
 "f": "img/spots/cameron.jpg",
 "c": "Jakub Hałun / CC BY 4.0 / Wikimedia Commons（Cameron Bharat Tea Plantation, Cameron Highlands, Malaysia, 20250829 1535 4120.jpg）"
 },
+"cenang": {
+"f": "img/spots/cenang.jpg",
+"c": "C980040 / CC BY-SA 4.0 / Wikimedia Commons（Pantai Cenang Beach at sunset.jpg）"
+},
 "chewjetty": {
 "f": "img/spots/chewjetty.jpg",
 "c": "Cmglee / CC BY-SA 3.0 / Wikimedia Commons（Cmglee Penang Chew Jetty view.jpg）"
@@ -39,6 +43,10 @@ App.data.spotPhotos = {
 "chowkit": {
 "f": "img/spots/chowkit.jpg",
 "c": "Patrice78500 / Public domain / Wikimedia Commons（Chow Kit - Bananes.JPG）"
+},
+"eaglesq": {
+"f": "img/spots/eaglesq.jpg",
+"c": "Bernard Spragg. NZ from Christchurch, New Zealand / CC0 / Wikimedia Commons（Langkawi Eagle Square - Dataran Lang (24462248434).jpg）"
 },
 "ecopark": {
 "f": "img/spots/ecopark.jpg",
@@ -92,6 +100,10 @@ App.data.spotPhotos = {
 "f": "img/spots/ipoh.jpg",
 "c": "Slleong / CC0 / Wikimedia Commons（Concubine Lane 1.jpg）"
 },
+"islandhop": {
+"f": "img/spots/islandhop.jpg",
+"c": "Gregorio02 / CC BY-SA 4.0 / Wikimedia Commons（Dayang-bunting-lake.jpg）"
+},
 "jalanalor": {
 "f": "img/spots/jalanalor.jpg",
 "c": "Alexander Synaptic / CC BY-SA 4.0 / Wikimedia Commons（Jalan Alor Kuala Lumpur.jpg）"
@@ -119,6 +131,10 @@ App.data.spotPhotos = {
 "ketam": {
 "f": "img/spots/ketam.jpg",
 "c": "白布飘扬 / CC BY-SA 3.0 / Wikimedia Commons（View of Pulau Ketam 02.JPG）"
+},
+"kilim": {
+"f": "img/spots/kilim.jpg",
+"c": "Dcpeets / CC BY-SA 4.0 / Wikimedia Commons（Kilim Geoforest Park, Langkawi.jpg）"
 },
 "kl-old": {
 "f": "img/spots/kl-old.jpg",
@@ -151,6 +167,10 @@ App.data.spotPhotos = {
 "mahmeri": {
 "f": "img/spots/mahmeri.jpg",
 "c": "Qhairy / CC0 / Wikimedia Commons（Mayin Jo’oh Mah Meri Masked Dance by Tompoq Topoh 08.jpg）"
+},
+"mahsuri": {
+"f": "img/spots/mahsuri.jpg",
+"c": "Shaifulaffandi / CC BY-SA 3.0 / Wikimedia Commons（Taman Mahsuri Entrance, Langkawi, Malaysia..jpg）"
 },
 "mamak": {
 "f": "img/spots/mamak.jpg",
@@ -236,9 +256,17 @@ App.data.spotPhotos = {
 "f": "img/spots/sepetangboat.jpg",
 "c": "WIL / CC BY 2.0 / Wikimedia Commons（Kuala Sepetang Sunset.jpg）"
 },
+"sevenwells": {
+"f": "img/spots/sevenwells.jpg",
+"c": "Sabrinakhanpoly / CC BY-SA 4.0 / Wikimedia Commons（Telaga tujoh waterfalls!.jpg）"
+},
 "shoes": {
 "f": "img/spots/shoes.jpg",
 "c": "不明 / CC BY-SA 3.0 / Wikimedia Commons（Foot binding shoes 1.jpg）"
+},
+"skycab": {
+"f": "img/spots/skycab.jpg",
+"c": "Engin Akyurt / CC0 / Wikimedia Commons（Langkawi Sky Bridge (November 2016).jpg）"
 },
 "spicegarden": {
 "f": "img/spots/spicegarden.jpg",
@@ -255,6 +283,10 @@ App.data.spotPhotos = {
 "tamingsari": {
 "f": "img/spots/tamingsari.jpg",
 "c": "Taufik / CC BY-SA 4.0 / Wikimedia Commons（I Love Menara Taming Sari.jpg）"
+},
+"tanjungrhu": {
+"f": "img/spots/tanjungrhu.jpg",
+"c": "Tim Parkinson / CC BY 2.0 / Wikimedia Commons（Tanjung Rhu Beach.jpg）"
 },
 "tempurung": {
 "f": "img/spots/tempurung.jpg",
