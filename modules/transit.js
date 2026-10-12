@@ -97,7 +97,7 @@ App.register({
 
     function drawOther() {
       const groups = [...new Set(App.data.transport.map((x) => x.area))];
-      const kindIcon = { bus: "bus", ship: "ship", train: "train", car: "car" };
+      const kindIcon = { bus: "bus", ship: "ship", train: "train", car: "car", plane: "plane" };
       pane.replaceChildren(
         ...groups.map((g) => h("section", { class: "block" },
           h("h2", { class: "sec" }, g),
