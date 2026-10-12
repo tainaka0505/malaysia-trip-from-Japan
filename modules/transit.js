@@ -122,7 +122,7 @@ App.register({
 
     function drawTabs() {
       tabs.replaceChildren(
-        ...[["ets", "ETS（電車）"], ["other", "バス・フェリー・空港"]].map(([k, t]) =>
+        ...[["ets", "ETS（電車）"], ["other", "バス・船・飛行機"]].map(([k, t]) =>
           h("button", { class: "seg-btn" + (tab === k ? " on" : ""), role: "tab", "aria-selected": tab === k ? "true" : "false", onclick: () => { tab = k; drawTabs(); } }, t))
       );
       tab === "ets" ? drawEts() : drawOther();
