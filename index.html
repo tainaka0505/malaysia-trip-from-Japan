@@ -486,11 +486,11 @@ body.wide-view main{max-width:1180px}
 /* 読み込むファイルの一覧。機能を足すときは、ここに data/ と modules/ のファイルを足す。 */
 const FILES = [
   "core/app.js", "core/icons.js", "core/store.js",
-  "data/trip.js", "data/spots.js", "data/spot_photos.js", "data/ets.js", "data/transport.js", "data/guide.js", "data/hotels.js", "data/hotel_imgs.js",
+  "data/trip.js", "data/spots.js", "data/spot_photos.js", "data/ets.js", "data/transport.js", "data/guide.js", "data/hotels.js", "data/hotel_imgs.js", "data/split_seed.js",
   "modules/itinerary.js", "modules/map.js", "modules/spots.js", "modules/transit.js", "modules/split.js",
   "modules/packing.js", "modules/guide.js", "modules/hotels.js",
 ];
-const V = "202610170315";
+const V = "202610170931";
 async function boot(pass) {
   for (const f of FILES) {
     await new Promise((ok) => {

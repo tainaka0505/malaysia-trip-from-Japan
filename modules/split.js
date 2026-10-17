@@ -259,6 +259,30 @@ App.register({
     const u1 = membersCol.watch((l) => { members = l.sort((a, b) => (a.created || 0) - (b.created || 0)); loaded.m = true; check(); draw(); });
     const u2 = expCol.watch((l) => { expenses = l; loaded.e = true; check(); draw(); });
     const u3 = settingsDoc.watch((d) => { if (d && d.rate > 0) rate = d.rate; draw(); });
-    onLeave(() => { u1(); u2(); u3(); });
+    // チャットで頼まれた支払い（data/split_seed.js）を1回だけ登録する。消した後に復活しないよう、登録済みのidを残す
+    const seedDoc = store.doc("split_settings/seeded");
+    let seeded = null, seeding = false;
+    const trySeed = async () => {
+      if (seeding || seeded === null || !loaded.m || !loaded.e || !members.length) return;
+      const todo = (App.data.splitSeed || []).filter((s) => !seeded.includes(s.id));
+      if (!todo.length) return;
+      seeding = true;
+      const done = [];
+      for (const s of todo) {
+        const low = (x) => String(x || "").toLowerCase().replace(/\s/g, "");
+        const payer = members.find((m) => s.payer.some((p) => low(m.name).includes(low(p))));
+        if (!payer) continue;
+        if (!expenses.some((e) => e.id === s.id)) {
+          try { await expCol.set(s.id, { kind: "expense", title: s.title, amount: s.amount, cur: s.cur, payer: payer.id, for: s.for || members.map((m) => m.id), date: s.date, created: Date.now() }); } catch (e) { continue; }
+        }
+        done.push(s.id);
+      }
+      if (done.length) { try { await seedDoc.set({ ids: seeded.concat(done) }); } catch (e) {} }
+      seeding = false;
+    };
+    const u4 = seedDoc.watch((d) => { seeded = (d && d.ids) || []; trySeed(); });
+    const u5 = membersCol.watch(() => setTimeout(trySeed, 0));
+    const u6 = expCol.watch(() => setTimeout(trySeed, 0));
+    onLeave(() => { u1(); u2(); u3(); u4(); u5(); u6(); });
   },
 });
