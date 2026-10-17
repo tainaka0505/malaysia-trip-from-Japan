@@ -1,5 +1,5 @@
 /* オフライン用：一度開いたファイルは保存して、ネットがなくても使えるようにする */
-const SHELL = "mt-shell-202610170931";
+const SHELL = "mt-shell-202610170936";
 const DATA = "mt-data-v1";
 const SHELL_FILES = ["./", "index.html", "manifest.webmanifest", "icons/icon-192.png", "icons/apple-touch-icon.png", "vendor/maplibre-gl.js", "vendor/maplibre-gl.css", "vendor/firebase-app-compat.js", "vendor/firebase-auth-compat.js", "vendor/firebase-firestore-compat.js", "core/config.js", "core/router-worker.js", "core/app.js", "core/icons.js", "core/store.js", "data/ets.js", "data/guide.js", "data/hotel_imgs.js", "data/hotels.js", "data/split_seed.js", "data/spot_photos.js", "data/spots.js", "data/transport.js", "data/trip.js", "modules/guide.js", "modules/hotels.js", "modules/itinerary.js", "modules/map.js", "modules/packing.js", "modules/split.js", "modules/spots.js", "modules/transit.js"];
 
@@ -25,7 +25,8 @@ self.addEventListener("fetch", (e) => {
     return;
   }
   // アプリ本体：まずネット、だめなら保存した物
-  e.respondWith(fetch(e.request).then((r) => {
+  // ブラウザの保存（最大10分）を使わず、毎回サーバーに新しい版があるか確かめる
+  e.respondWith(fetch(e.request.url, { cache: "no-cache", credentials: "same-origin" }).then((r) => {
     if (r.ok) { const cp = r.clone(); caches.open(SHELL).then((c) => c.put(e.request, cp)); }
     return r;
   }).catch(() => caches.match(e.request, { ignoreSearch: true }).then((h) => h || caches.match("index.html"))));
