@@ -20,6 +20,10 @@ App.data.spotPhotos = {
 "f": "img/spots/batuferringhi.jpg",
 "c": "Marek Ślusarczyk (Tupungato) Photo portfolio / CC BY 3.0 / Wikimedia Commons（33 Batu Ferringhi beach, Penang, Malaysia.jpg）"
 },
+"bigbuddha": {
+"f": "img/spots/bigbuddha.jpg",
+"c": "Béria Lima de Rodríguez / CC BY-SA 3.0 / Wikimedia Commons（Tian Tan Buddha by Beria.jpg）"
+},
 "bukitlarut": {
 "f": "img/spots/bukitlarut.jpg",
 "c": "SRTG / CC BY-SA 3.0 / Wikimedia Commons（Greenery at Maxwell, Bukit Larut.jpg）"
@@ -31,6 +35,10 @@ App.data.spotPhotos = {
 "cenang": {
 "f": "img/spots/cenang.jpg",
 "c": "C980040 / CC BY-SA 4.0 / Wikimedia Commons（Pantai Cenang Beach at sunset.jpg）"
+},
+"chachaanteng": {
+"f": "img/spots/chachaanteng.jpg",
+"c": "Evancyk / CC BY-SA 4.0 / Wikimedia Commons（Pineapple bun and milk tea.jpg）"
 },
 "chewjetty": {
 "f": "img/spots/chewjetty.jpg",
@@ -44,6 +52,10 @@ App.data.spotPhotos = {
 "f": "img/spots/chowkit.jpg",
 "c": "Patrice78500 / Public domain / Wikimedia Commons（Chow Kit - Bananes.JPG）"
 },
+"dragonsback": {
+"f": "img/spots/dragonsback.jpg",
+"c": "DearEdward from New York, NY, USA / CC BY 2.0 / Wikimedia Commons（Dragon's Back (3206275754).jpg）"
+},
 "eaglesq": {
 "f": "img/spots/eaglesq.jpg",
 "c": "Bernard Spragg. NZ from Christchurch, New Zealand / CC0 / Wikimedia Commons（Langkawi Eagle Square - Dataran Lang (24462248434).jpg）"
@@ -55,6 +67,10 @@ App.data.spotPhotos = {
 "entopia": {
 "f": "img/spots/entopia.jpg",
 "c": "Chongkian / CC BY-SA 4.0 / Wikimedia Commons（Entopia by Penang Butterfly Farm.jpg）"
+},
+"escalator": {
+"f": "img/spots/escalator.jpg",
+"c": "K.C. Tang / CC BY-SA 3.0 / Wikimedia Commons（Central-Mid-levels escalator.jpg）"
 },
 "escape": {
 "f": "img/spots/escape.jpg",
@@ -176,6 +192,10 @@ App.data.spotPhotos = {
 "f": "img/spots/mamak.jpg",
 "c": "Alpha from Melbourne, Australia / CC BY-SA 2.0 / Wikimedia Commons（Roti Canai - Old Town Kopitiam Mamak AUD4 (4273370187).jpg）"
 },
+"manmo": {
+"f": "img/spots/manmo.jpg",
+"c": "Aethelfirth / CC BY-SA 4.0 / Wikimedia Commons（Burning incense coils in the Man Mo temple (Hong Kong).jpg）"
+},
 "masjidselat": {
 "f": "img/spots/masjidselat.jpg",
 "c": "CEphoto, Uwe Aranas / CC BY-SA 3.0 / Wikimedia Commons（Malacca Malaysia Malacca-Straits-Mosque-01.jpg）"
@@ -191,6 +211,14 @@ App.data.spotPhotos = {
 "mirrorlake": {
 "f": "img/spots/mirrorlake.jpg",
 "c": "Ronykr / CC BY-SA 4.0 / Wikimedia Commons（Mirror Lake 2 (Tasik Cermin 2) Ipoh, Malaysia.jpg）"
+},
+"mongkok": {
+"f": "img/spots/mongkok.jpg",
+"c": "Mk2010 / CC BY-SA 3.0 / Wikimedia Commons（Mong Kok Road and Tung Choi Street (Hong Kong).jpg）"
+},
+"monster": {
+"f": "img/spots/monster.jpg",
+"c": "Sakaori (talk) / CC BY 3.0 / Wikimedia Commons（Yick Cheong Building and Yick Fat Building. Aug. 2015.A.JPG）"
 },
 "morten": {
 "f": "img/spots/morten.jpg",
@@ -215,6 +243,10 @@ App.data.spotPhotos = {
 "parasail": {
 "f": "img/spots/parasail.jpg",
 "c": "غریبه ای در شهر / CC BY-SA 4.0 / Wikimedia Commons（Batu Ferringhi beach.jpg）"
+},
+"peak": {
+"f": "img/spots/peak.jpg",
+"c": "Base64, retouched by CarolSpears / CC BY-SA 3.0 / Wikimedia Commons（Hong Kong Night Skyline.jpg）"
 },
 "penanghill": {
 "f": "img/spots/penanghill.jpg",
@@ -272,6 +304,18 @@ App.data.spotPhotos = {
 "f": "img/spots/spicegarden.jpg",
 "c": "Richard N Horne / CC BY-SA 4.0 / Wikimedia Commons（Tropical Spice Garden, Penang island in Malaysia.jpg）"
 },
+"starferry": {
+"f": "img/spots/starferry.jpg",
+"c": "Alexkom000 / CC BY 4.0 / Wikimedia Commons（2024-12-27 A Star Ferry crosses Victoria Harbour 2.jpg）"
+},
+"symphony": {
+"f": "img/spots/symphony.jpg",
+"c": "Daniel Case / CC BY-SA 3.0 / Wikimedia Commons（Hong Kong night skyline during Symphony of Lights from Tsim Sha Tsui.jpg）"
+},
+"taio": {
+"f": "img/spots/taio.jpg",
+"c": "Underwaterbuffalo / CC BY-SA 4.0 / Wikimedia Commons（Tai O stilt houses 02.jpg）"
+},
 "taiping": {
 "f": "img/spots/taiping.jpg",
 "c": "Slleong / CC0 / Wikimedia Commons（Taiping Lake Gardens 6.jpg）"
@@ -288,6 +332,10 @@ App.data.spotPhotos = {
 "f": "img/spots/tanjungrhu.jpg",
 "c": "Tim Parkinson / CC BY 2.0 / Wikimedia Commons（Tanjung Rhu Beach.jpg）"
 },
+"templestreet": {
+"f": "img/spots/templestreet.jpg",
+"c": "Diego Delso / CC BY-SA 3.0 / Wikimedia Commons（Mercado en Temple St., Hong Kong, 2013-08-11, DD 01.JPG）"
+},
 "tempurung": {
 "f": "img/spots/tempurung.jpg",
 "c": "andre oortgijs / CC BY-SA 3.0 / Wikimedia Commons（Gua Tempurung - panoramio.jpg）"
@@ -299,6 +347,10 @@ App.data.spotPhotos = {
 "thetop": {
 "f": "img/spots/thetop.jpg",
 "c": "Vnonymous / CC BY-SA 4.0 / Wikimedia Commons（KOMTAR Skywalk, George Town, Penang.jpg）"
+},
+"tram": {
+"f": "img/spots/tram.jpg",
+"c": "Jakub Hałun / CC BY-SA 4.0 / Wikimedia Commons（20091004 Tram in Hong Kong 0451 6707.jpg）"
 },
 "trishawmk": {
 "f": "img/spots/trishawmk.jpg",
@@ -315,5 +367,13 @@ App.data.spotPhotos = {
 "ulugeroh": {
 "f": "img/spots/ulugeroh.jpg",
 "c": "diego_cue / CC BY-SA 3.0 / Wikimedia Commons（Rafflesia flower - Cameron Highlands - Malaysia - panoramio.jpg）"
+},
+"wongtaisin": {
+"f": "img/spots/wongtaisin.jpg",
+"c": "CEphoto, Uwe Aranas / CC BY-SA 3.0 / Wikimedia Commons（Hong Kong China Wong-Tai-Sin-Temple-01.jpg）"
+},
+"yumcha": {
+"f": "img/spots/yumcha.jpg",
+"c": "Peachyeung316 / CC BY-SA 4.0 / Wikimedia Commons（Yam Cha at tsuen wan 2.jpg）"
 }
 };
