@@ -447,6 +447,8 @@ body.wide-view main{max-width:1180px}
 .ht-strip figcaption{font-size:.66rem;color:var(--muted);padding-top:2px}
 .ht-vibe{font-size:.98rem;line-height:1.85;margin:10px 0}
 .ht-detail h3{margin-top:16px}
+
+.card.tr.hl{outline:2px solid var(--accent, #c0392b);outline-offset:2px}
 </style>
 </head>
 <body>
@@ -490,7 +492,7 @@ const FILES = [
   "modules/itinerary.js", "modules/map.js", "modules/spots.js", "modules/transit.js", "modules/split.js",
   "modules/packing.js", "modules/guide.js", "modules/hotels.js",
 ];
-const V = "202610201609";
+const V = "202610201626";
 async function boot(pass) {
   for (const f of FILES) {
     await new Promise((ok) => {

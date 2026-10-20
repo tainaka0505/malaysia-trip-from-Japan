@@ -102,7 +102,7 @@ App.register({
         ...groups.map((g) => h("section", { class: "block" },
           h("h2", { class: "sec" }, g),
           h("div", { class: "cards2" }, App.data.transport.filter((x) => x.area === g).map((x) =>
-            h("article", { class: "card tr" },
+            h("article", { class: "card tr" + (param && param.tr === x.id ? " hl" : ""), id: "tr-" + x.id },
               h("div", { class: "row gap" }, icon(kindIcon[x.kind] || "dot", "lg"), h("strong", null, x.name)),
               h("div", { class: "small muted" }, x.route),
               x.times ? h("dl", { class: "kv small" }, x.times.map(([k, v]) => [h("dt", null, k), h("dd", { class: "mono" }, v)])) : null,
@@ -126,6 +126,7 @@ App.register({
           h("button", { class: "seg-btn" + (tab === k ? " on" : ""), role: "tab", "aria-selected": tab === k ? "true" : "false", onclick: () => { tab = k; drawTabs(); } }, t))
       );
       tab === "ets" ? drawEts() : drawOther();
+      if (tab === "other" && param && param.tr) { const c = document.getElementById("tr-" + param.tr); if (c) setTimeout(() => c.scrollIntoView({ block: "center" }), 50); }
     }
     el.append(tabs, pane);
     drawTabs();

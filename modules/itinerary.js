@@ -73,7 +73,7 @@ App.register({
         ),
         h("ol", { class: "timeline" },
           d.items.map((it) => {
-            const link = it.spot ? () => go("spots", { spot: it.spot }) : it.train ? () => go("transit", { train: it.train }) : null;
+            const link = it.spot ? () => go("spots", { spot: it.spot }) : it.train ? () => go("transit", { train: it.train }) : it.tr ? () => go("transit", { tab: "other", tr: it.tr }) : null;
             return h("li", { class: "tl " + it.type },
               h("span", { class: "tl-time mono" }, it.time || "—"),
               h("span", { class: "tl-dot" }, icon(typeIcon[it.type] || "dot")),
