@@ -1,5 +1,5 @@
 /* オフライン用：一度開いたファイルは保存して、ネットがなくても使えるようにする */
-const SHELL = "mt-shell-202610201633";
+const SHELL = "mt-shell-202610231439";
 const DATA = "mt-data-v1";
 const SHELL_FILES = ["./", "index.html", "manifest.webmanifest", "icons/icon-192.png", "icons/apple-touch-icon.png", "vendor/maplibre-gl.js", "vendor/maplibre-gl.css", "vendor/firebase-app-compat.js", "vendor/firebase-auth-compat.js", "vendor/firebase-firestore-compat.js", "core/config.js", "core/router-worker.js", "core/app.js", "core/icons.js", "core/store.js", "data/ets.js", "data/guide.js", "data/hotel_imgs.js", "data/hotels.js", "data/split_seed.js", "data/spot_photos.js", "data/spots.js", "data/transport.js", "data/trip.js", "modules/guide.js", "modules/hotels.js", "modules/itinerary.js", "modules/map.js", "modules/packing.js", "modules/split.js", "modules/spots.js", "modules/transit.js"];
 
